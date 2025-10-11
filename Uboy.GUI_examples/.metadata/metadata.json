@@ -1,0 +1,13 @@
+{
+  "name" : "Uboy.GUI_example",
+  "id" : "uboy.gui.example",
+  "version" : "1.0.0",
+  "supported_game_version" : "1.10.*",
+  "picture": "thumbnail.png",
+  "short_description" : "example codes for gui modding",
+  "tags" : ["Utilities"],
+  "relationships" : [],
+  "game_custom_data" : {
+    "multiplayer_synchronized" : true
+  }
+}

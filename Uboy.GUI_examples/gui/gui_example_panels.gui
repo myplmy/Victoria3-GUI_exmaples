@@ -1,0 +1,115 @@
+﻿############################################
+# GUI MODDING TUTORIAL - MAIN PANELS
+############################################
+# This file creates the actual panel widgets that are displayed in-game
+# It references the types defined in gui_example_panel_types.gui
+
+###############################################
+# MAIN WIDGET CONTAINER
+###############################################
+# This is the root widget that holds all custom panels
+# The name MUST match what you register in scripted_widgets
+
+widget = {
+    name = gui_example_panels_widget
+    
+    # Set the layer to match the panels
+    layer = layer_ingame_menu
+    
+    # Make this widget fill the entire screen
+    size = { 100% 100% }
+    
+    # This widget should not block mouse clicks outside panels
+    filter_mouse = none
+    
+    ###############################################
+    # FULL SCREEN PANELS SECTION
+    ###############################################
+    # Full screen panels would go directly here
+    # Example (uncomment if you create full screen panels):
+    # gui_example_full_screen_panel = {}
+    
+    ###############################################
+    # SIDE PANELS LAYOUT CONTAINER
+    ###############################################
+    # This container ensures side panels are positioned correctly
+    # and don't overlap with the top bar
+    
+    vbox = {
+        parentanchor = top|left
+        layoutpolicy_horizontal = expanding
+        layoutpolicy_vertical = expanding
+        
+        # Top margin to avoid overlapping with the game's top bar
+        margin_top = 85
+        
+        widget = {
+            layoutpolicy_horizontal = expanding
+            layoutpolicy_vertical = expanding
+            
+            hbox = {
+                layoutpolicy_horizontal = expanding
+                layoutpolicy_vertical = expanding
+                
+                ###############################################
+                # SIDE PANELS GO HERE
+                ###############################################
+                # Reference your side panel types here
+                # The panel will be positioned on the left side
+                
+                gui_example_side_panel = {}
+                
+                # This expand widget pushes everything to the left
+                # Remove or adjust if you want panels on the right
+                expand = {}
+            }
+        }
+    }
+}
+
+###############################################
+# BUTTON TO OPEN THE PANEL
+###############################################
+# This creates a button in the top bar to open your tutorial panel
+# You can also create buttons in other locations
+
+widget = {
+    name = gui_example_panel_button
+    
+    # Position in the top bar area
+    layer = layer_ingame_menu
+    parentanchor = top|left
+    
+    # Position it in the top bar (adjust as needed)
+    position = { 400 10 }
+    size = { 150 40 }
+    
+    button = {
+        size = { 100% 100% }
+        using = default_button
+        
+        # Check if the panel is currently open
+        # This changes the button appearance when panel is visible
+        down = "[GetVariableSystem.Exists('gui_example_panel_open')]"
+        
+        # Toggle the panel open/closed
+        onclick = "[GetVariableSystem.Toggle('gui_example_panel_open')]"
+        
+        tooltip = "Open/Close GUI Tutorial Panel\\n\\nThis button demonstrates how to toggle custom panels using the variable system."
+        
+        textbox = {
+            parentanchor = center
+            text = "GUI Tutorial"
+            align = center|nobaseline
+            elide = right
+        }
+    }
+}
+
+###############################################
+# ALTERNATIVE: SIDEBAR BUTTON
+###############################################
+# If you prefer to add a button to the left sidebar instead,
+# you would need to modify the base game's sidebar
+# This is more complex and requires overriding base game files
+# For beginners, the top bar button above is recommended

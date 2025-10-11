@@ -1,0 +1,41 @@
+﻿############################################
+# GUI MODDING TUTORIAL - SCRIPTED WIDGETS
+############################################
+# This file registers your custom GUI widgets with the game
+# 
+# IMPORTANT: This file must be placed in:
+# game/gui/scripted_widgets/
+#
+# Format: path/to/gui/file.gui = widget_name_from_that_file
+
+# Register the main tutorial panels widget
+# This tells the game to load tutorial_panels.gui and look for
+# a widget named "gui_example_panels_widget"
+
+gui/gui_example_panel.gui = gui_example_panels_widget
+
+# Register the button widget
+# This creates the button that opens the tutorial panel
+gui/gui_example_panels.gui = gui_example_panel_button
+
+############################################
+# NOTES FOR MODDERS
+############################################
+# 
+# 1. The left side is the path to your .gui file
+#    It's relative to the game/ folder in your mod
+#
+# 2. The right side is the exact name of a widget in that file
+#    It must match the "name = " property in the widget
+#
+# 3. You can have multiple lines pointing to the same file
+#    if that file contains multiple root-level widgets
+#
+# 4. Make sure there are no typos - the game won't warn you
+#    if it can't find the widget, it just won't appear
+#
+# 5. This file can have any name, as long as it's in the
+#    scripted_widgets folder and has a .txt extension
+#
+############################################
+

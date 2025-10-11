@@ -1,0 +1,341 @@
+﻿############################################
+# GUI MODDING TUTORIAL - PANEL TYPES
+############################################
+# This file defines custom panel types that demonstrate
+# various GUI modding techniques for beginners
+
+# Define panel width constants (standard Victoria 3 convention)
+@panel_width = 540
+@panel_width_half = 270
+
+# Type definition block - all custom types must be wrapped in a types block
+types gui_example_panel_types {
+    
+    ###############################################
+    # TUTORIAL SIDE PANEL
+    ###############################################
+    # This demonstrates a basic side panel that can be opened/closed
+    # Side panels appear on the left or right side of the screen
+    
+    type gui_example_panel = default_block_window {
+        name = "gui_example_panel"
+        
+        # CRITICAL: Set the correct layer to prevent overlay issues
+        # layer_ingame_menu ensures this panel plays nicely with other UI
+        layer = layer_ingame_menu
+        
+        # Control panel visibility using the variable system
+        # This checks if the variable 'gui_example_panel_open_window' is set to 'gui_example_panel'
+        visible = "[GetVariableSystem.HasValue('gui_example_panel_open_window', 'gui_example_panel')]"
+        
+        # Define the animation behavior when showing the panel
+        blockoverride "animation_state_block" {
+            state = {
+                name = _show
+                
+                # Close other panels before showing this one to prevent conflicts
+                on_finish = "[InformationPanelBar.ClosePanel]"
+                on_finish = "[MapListPanelManager.CloseCurrentPanel]"
+                
+                # Optional: Add sound effects (uncomment to use)
+                # start_sound = {
+                #     soundeffect = "event:/SFX/UI/SideBar/outliner_open"
+                # }
+            }
+            
+            # Animation when hiding the panel
+            state = {
+                name = _hide
+                # Optional: Add sound effects
+                # start_sound = {
+                #     soundeffect = "event:/SFX/UI/SideBar/outliner_close"
+                # }
+            }
+        }
+        
+        # Define the actual panel content
+        blockoverride "window_content" {
+            
+            # Main container for panel content
+            container = {
+                
+                ###############################################
+                # PANEL HEADER
+                ###############################################
+                widget = {
+                    size = { @panel_width 60 }
+                    
+                    # Header background
+                    background = {
+                        using = dark_area
+                        margin = { 10 5 }
+                    }
+                    
+                    # Title text
+                    textbox = {
+                        parentanchor = center
+                        size = { 90% 100% }
+                        raw_text = "GUI Modding Tutorial Panel"
+                        align = center|nobaseline
+                        using = fontsize_xxl
+                        elide = right
+                    }
+                    
+                    # Close button
+                    button_close = {
+                        parentanchor = right|vcenter
+                        position = { -10 0 }
+                        size = { 30 30 }
+                        
+                        # Clear the variable to hide the panel
+                        onclick = "[GetVariableSystem.Clear('gui_example_panel_open_window')]"
+                        
+                        raw_tooltip ="Close Panel"
+                    }
+                }
+                
+                ###############################################
+                # PANEL BODY - SCROLLABLE CONTENT AREA
+                ###############################################
+                widget = {
+                    position = { 0 60 }
+                    size = { @panel_width 700 }
+                    
+                    # Scrollbar for content
+                    scrollarea = {
+                        size = { 100% 100% }
+                        
+                        scrollbarpolicy_horizontal = always_off
+                        scrollbarpolicy_vertical = as_needed
+                        
+                        # Scrollbar widget
+                        scrollbar_vertical = {
+                            using = vertical_scrollbar
+                        }
+                        
+                        # Content container that will scroll
+                        scrollwidget = {
+                            container = {
+                                
+                                # Vertical flow container for stacking elements
+                                flowcontainer = {
+                                    direction = vertical
+                                    spacing = 10
+                                    margin = { 15 15 }
+                                    
+                                    ###############################################
+                                    # SECTION 1: BASIC TEXT DISPLAY
+                                    ###############################################
+                                    widget = {
+                                        size = { @panel_width_half 100 }
+                                        
+                                        background = {
+                                            using = default_background
+                                        }
+                                        
+                                        textbox = {
+                                            parentanchor = center
+                                            size = { 90% 90% }
+                                            raw_text = "Section 1: Text Display | This demonstrates basic text rendering in Victoria 3 GUI.You can use multiline text and various formatting options."
+                                            align = left|top
+                                            multiline = yes
+                                            autoresize = yes
+                                            maximumsize = { 480 -1 }
+                                        }
+                                    }
+                                    
+                                    ###############################################
+                                    # SECTION 2: BUTTONS
+                                    ###############################################
+                                    widget = {
+                                        size = { @panel_width_half 150 }
+                                        
+                                        background = {
+                                            using = default_background
+                                        }
+                                        
+                                        flowcontainer = {
+                                            direction = vertical
+                                            parentanchor = center
+                                            spacing = 10
+                                            
+                                            textbox = {
+                                                autoresize = yes
+                                                raw_text = "Section 2: Interactive Buttons"
+                                                align = center
+                                                using = fontsize_large
+                                            }
+                                            
+                                            # Example button that does nothing (for demonstration)
+                                            button = {
+                                                size = { 200 40 }
+                                                using = default_button
+                                                
+                                                textbox = {
+                                                    parentanchor = center
+                                                    raw_text = "Example Button"
+                                                    align = center|nobaseline
+                                                }
+                                                
+                                                raw_tooltip ="This is a demonstration button \\n Buttons can trigger various actions"
+                                                
+                                                # Uncomment to add functionality:
+                                                # onclick = "[YourFunctionHere]"
+                                            }
+                                        }
+                                    }
+                                    
+                                    ###############################################
+                                    # SECTION 3: ICONS AND IMAGES
+                                    ###############################################
+                                    widget = {
+                                        size = { @panel_width_half 120 }
+                                        
+                                        background = {
+                                            using = default_background
+                                        }
+                                        
+                                        flowcontainer = {
+                                            direction = vertical
+                                            parentanchor = center
+                                            spacing = 10
+                                            
+                                            textbox = {
+                                                autoresize = yes
+                                                raw_text = "Section 3: Icons"
+                                                align = center
+                                                using = fontsize_large
+                                            }
+                                            
+                                            flowcontainer = {
+                                                direction = horizontal
+                                                spacing = 10
+                                                
+                                                # Example icons from the base game
+                                                icon = {
+                                                    size = { 40 40 }
+                                                    texture = "gfx/interface/icons/generic_icons/population.dds"
+                                                    raw_tooltip ="Population Icon"
+                                                }
+                                                
+                                                icon = {
+                                                    size = { 40 40 }
+                                                    texture = "gfx/interface/icons/generic_icons/trade.dds"
+                                                    raw_tooltip ="Trade Icon"
+                                                }
+                                                
+                                            }
+                                        }
+                                    }
+                                    
+                                    ###############################################
+                                    # SECTION 4: PROGRESS BARS
+                                    ###############################################
+                                    widget = {
+                                        size = { @panel_width_half 100 }
+                                        
+                                        background = {
+                                            using = default_background
+                                        }
+                                        
+                                        flowcontainer = {
+                                            direction = vertical
+                                            parentanchor = center
+                                            spacing = 10
+                                            margin = { 10 10 }
+                                            
+                                            textbox = {
+                                                autoresize = yes
+                                                raw_text = "Section 4: Progress Bars"
+                                                align = center
+                                                using = fontsize_large
+                                            }
+                                            
+                                            # Progress bar example
+                                            progressbar_standard = {
+                                                size = { 240 20 }
+                                                value = 0.7
+                                                raw_tooltip ="Example progress bar at 70%"
+                                            }
+                                        }
+                                    }
+                                    
+                                    ###############################################
+                                    # SECTION 5: HORIZONTAL LAYOUTS
+                                    ###############################################
+                                    widget = {
+                                        size = { @panel_width_half 100 }
+                                        
+                                        background = {
+                                            using = default_background
+                                        }
+                                        
+                                        flowcontainer = {
+                                            direction = vertical
+                                            parentanchor = center
+                                            spacing = 10
+                                            
+                                            textbox = {
+                                                autoresize = yes
+                                                raw_text = "Section 5: Horizontal Box Layout"
+                                                align = center
+                                                using = fontsize_large
+                                            }
+                                            
+                                            # Horizontal box with multiple elements
+                                            hbox = {
+                                                spacing = 10
+                                                
+                                                textbox = {
+                                                    autoresize = yes
+                                                    raw_text = "Left"
+                                                    align = center|nobaseline
+                                                }
+                                                
+                                                widget = {
+                                                    size = { 2 30 }
+                                                    background = {
+                                                        using = dark_area
+                                                    }
+                                                }
+                                                
+                                                textbox = {
+                                                    autoresize = yes
+                                                    raw_text = "Center"
+                                                    align = center|nobaseline
+                                                }
+                                                
+                                                widget = {
+                                                    size = { 2 30 }
+                                                    background = {
+                                                        using = dark_area
+                                                    }
+                                                }
+                                                
+                                                textbox = {
+                                                    autoresize = yes
+                                                    raw_text = "Right"
+                                                    align = center|nobaseline
+                                                }
+                                            }
+                                        }
+                                    }
+                                    
+                                    ###############################################
+                                    # ADDITIONAL SECTIONS
+                                    ###############################################
+                                    # Add more sections here as needed for your tutorial
+                                    
+                                    # Spacer at the bottom
+                                    widget = {
+                                        size = { 1 20 }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
