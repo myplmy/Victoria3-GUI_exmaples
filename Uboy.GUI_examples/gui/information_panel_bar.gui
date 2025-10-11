@@ -799,13 +799,9 @@ template sidebar_button_size_small {
 
 
 ### Uboy.GUI_Examples
-
 ############################################
 # INFORMATION PANEL BAR - GUI EXAMPLE SECTION
 ############################################
-# This is the section you need to add/update in information_panel_bar.gui
-# Place this at the end of the file or in the appropriate types block
-
 
 ###############################################
 # SIDEBAR BUTTON TYPE FOR GUI EXAMPLE
@@ -818,9 +814,8 @@ types gui_example_sidebar_types {
         sidebar_label_button = {
             position = { -100 @example_sidebar_position }
             blockoverride "onclick" {
-                # Open panel with tab cycling support
+                enabled = "[GetMetaPlayer.GetPlayedOrObservedCountry.IsValid]"
                 onclick = "[InformationPanelBar.OpenPanelCycleTabs('gui_example_panel', 'default|layouts|advanced')]"
-                input_action = "open_gui_examples"
             }
         }
         
@@ -837,6 +832,8 @@ types gui_example_sidebar_types {
             using = clickthrough_blocker
             using = sidebar_button_size
             using = selected_sidepanel_animation
+            
+            enabled = "[GetMetaPlayer.GetPlayedOrObservedCountry.IsValid]"
             
             # Highlight when panel is open
             blockoverride "selected_visibility" {
@@ -855,6 +852,7 @@ types gui_example_sidebar_types {
                 }
                 
                 # Click action
+                enabled = "[GetMetaPlayer.GetPlayedOrObservedCountry.IsValid]"
                 onclick = "[InformationPanelBar.OpenPanelCycleTabs('gui_example_panel', 'default|layouts|advanced')]"
             }
         }
@@ -862,34 +860,9 @@ types gui_example_sidebar_types {
         # Tooltip area
         sidebar_tooltip_area = {
             position = { 0 @example_sidebar_position }
-            raw_tooltip = "Show GUI Sample Panel\\n\\nDemonstrates basic GUI modding techniques"
-            input_action = "open_gui_examples"
+            raw_tooltip = "Show GUI Sample Panel - Demonstrates basic GUI modding techniques"
         }
     }
 }
 
-
-############################################
-# INTEGRATION INSTRUCTIONS
-############################################
-# 
-# To integrate this into your information_panel_bar.gui:
-#
-# 1. Copy the "using gui_example_panel_types.gui" line to the top
-#    of your information_panel_bar.gui file (after the position constants)
-#
-# 2. Copy the @example_sidebar_position constant definition
-#
-# 3. Copy the entire gui_example_sidebar_types block
-#
-# 4. In the main information_panel_bar type, find the flowcontainer
-#    that contains all the other sidebar buttons (around line 800-900)
-#
-# 5. Add this line where you want your button to appear:
-#    gui_example_sidebar_button = {}
-#
-# The button will now appear in the sidebar and fully work with
-# the InformationPanelBar system!
-#
-############################################
 ### Uboy.GUI_Examples END
