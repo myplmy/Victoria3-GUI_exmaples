@@ -1108,7 +1108,7 @@
     }
 }
 
-#type example_side_panel = default_block_window {
+#type gui_example_side_panel = default_block_window {
 #    # Important to make sure the window does not overlay other base game stuff
 #    layer = layer_ingame_menu
 #    
@@ -1134,7 +1134,7 @@
 #}
 #
 #widget = {
-#    name = example_panels
+#    name = gui_example_panels
 #    layer = layer_ingame_menu
 #    size = { 100% 100% }
 #
@@ -1158,7 +1158,7 @@
 #
 #                # Side panels go here
 #                # Refer to them like this:
-#                example_side_panel = {}
+#                gui_example_side_panel = {}
 #
 #                expand = {}
 #            }

@@ -57,7 +57,7 @@ widget = {
                 # Reference your side panel types here
                 # The panel will be positioned on the left side
                 
-                gui_example_side_panel = {}
+                gui_example_panel = {}
                 
                 # This expand widget pushes everything to the left
                 # Remove or adjust if you want panels on the right
@@ -95,11 +95,11 @@ widget = {
         # Toggle the panel open/closed
         onclick = "[GetVariableSystem.Toggle('gui_example_panel_open')]"
         
-        tooltip = "Open/Close GUI Tutorial Panel\\n\\nThis button demonstrates how to toggle custom panels using the variable system."
+        raw_tooltip = "Open/Close GUI Tutorial Panel\\nThis button demonstrates how to toggle custom panels using the variable system."
         
         textbox = {
             parentanchor = center
-            text = "GUI Tutorial"
+            raw_text = "GUI Tutorial"
             align = center|nobaseline
             elide = right
         }
