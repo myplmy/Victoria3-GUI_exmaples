@@ -1,74 +1,135 @@
 ﻿############################################
-# SIMPLE TEST PANEL - FOR DEBUGGING
+# GUI MODDING TUTORIAL - PANEL TYPES
 ############################################
-# Use this to test if InformationPanelBar is working at all
-# Replace gui_example_panel_types.gui temporarily with this
+# This file defines the actual panel that appears in-game
+# Fixed version based on Community Mod Framework patterns
 
 @panel_width = 540
+@panel_width_half = 270
 
-types test_simple_panel_types {
-    
-    type gui_example_panel = default_block_window {
+using gui_example.gui
+
+types gui_example_panel_types {
+    type gui_example_panel = default_block_window{
         name = "gui_example_panel"
-        
-        layer = layer_ingame_menu
-        
-        blockoverride "animation_state_block" {
-            state = {
-                name = _show
-                on_finish = "[InformationPanelBar.ClosePanel]"
-            }
-            state = {
-                name = _hide
-            }
+        visible = "[And(
+            GetVariableSystem.Exists('gui_example_panel_open'),
+            Not(InformationPanelBar.IsAnyPanelOpen())
+        )]"
+
+        blockoverride "animation_state_block"{
         }
-        
-        blockoverride "header_close_button" {
-            visible = yes
-            onclick = "[InformationPanelBar.ClosePanel]"
+
+        blockoverride "window_header_name"{
+            raw_text = "gui_example_panel_title"
         }
-        
-        blockoverride "window_header_name" {
-            raw_text = "TEST PANEL"
+
+        blockoverride "header_close_button"{
+            onclick = "[GetVariableSystem.Clear('gui_example_panel_open')]"
         }
-        
-        blockoverride "scrollarea_content" {
-            flowcontainer = {
-                direction = vertical
-                spacing = 20
-                minimumsize = { @panel_width -1 }
-                
-                widget = {
-                    size = { @panel_width 100 }
-                    
-                    background = {
-                        using = default_background
-                    }
-                    
-                    textbox = {
-                        parentanchor = center
-                        raw_text = "If you can read this, the panel is working. Click X button or ESC to close."
-                        align = center
-                        multiline = yes
-                        autoresize = yes
-                        maximumsize = { 480 -1 }
-                    }
-                }
-                
-                button = {
-                    size = { 200 40 }
-                    using = default_button
-                    parentanchor = hcenter
-                    
-                    onclick = "[InformationPanelBar.ClosePanel]"
-                    
-                    textbox = {
-                        parentanchor = center
-                        raw_text = "Close Panel"
-                        align = center|nobaseline
-                    }
-                }
-            }
+
+        # Main content area
+        blockoverride "entire_scrollarea" {
+            align = left
+            test_container = {}
         }
     }
 }
+#    type gui_example_panel = default_block_window {
+#        name = "gui_example_panel"
+#        
+#        # Layer is important - determines draw order
+#        layer = layer_ingame_menu
+#        
+#        # FIXED: Proper animation state block following CMF pattern
+#        blockoverride "animation_state_block" {
+#            state = {
+#                name = _show
+#                # Close other panels when this one opens
+#                on_finish = "[InformationPanelBar.ClosePanel]"
+#                on_finish = "[MapListPanelManager.CloseCurrentPanel]"
+#                # Optional: Add opening sound
+#                start_sound = {
+#                    soundeffect = "event:/SFX/UI/SideBar/politics"
+#                }
+#            }
+#            state = {
+#                name = _hide
+#                # Optional: Add closing sound
+#                start_sound = {
+#                    soundeffect = "event:/SFX/UI/SideBar/politics_stop"
+#                }
+#            }
+#        }
+#        
+#        # Close button functionality
+#        blockoverride "header_close_button" {
+#            visible = yes
+#            onclick = "[InformationPanelBar.ClosePanel]"
+#        }
+#        
+#        # Panel title
+#        blockoverride "window_header_name" {
+#            raw_text = "GUI Modding Tutorial"
+#        }
+#        
+#        # Main content area
+#        blockoverride "scrollarea_content" {
+#            flowcontainer = {
+#                direction = vertical
+#                spacing = 20
+#                minimumsize = { @panel_width -1 }
+#                
+#                # Section 1: Basic Text
+#                widget = {
+#                    size = { @panel_width 100 }
+#                    
+#                    background = {
+#                        using = default_background
+#                    }
+#                    
+#                    textbox = {
+#                        parentanchor = center
+#                        raw_text = "Welcome to GUI Modding Tutorial!\n\nThis panel demonstrates basic GUI elements."
+#                        align = center
+#                        multiline = yes
+#                        autoresize = yes
+#                        maximumsize = { 480 -1 }
+#                    }
+#                }
+#                
+#                # Section 2: Button Example
+#                button = {
+#                    size = { 200 40 }
+#                    using = default_button
+#                    parentanchor = hcenter
+#                    
+#                    onclick = "[InformationPanelBar.ClosePanel]"
+#                    
+#                    textbox = {
+#                        parentanchor = center
+#                        raw_text = "Close Panel"
+#                        align = center|nobaseline
+#                    }
+#                }
+#                
+#                # Section 3: Info Box
+#                widget = {
+#                    size = { @panel_width 80 }
+#                    
+#                    background = {
+#                        using = entry_bg_simple
+#                    }
+#                    
+#                    textbox = {
+#                        parentanchor = center
+#                        raw_text = "Panel is working correctly!\nIf you can see this, the fix succeeded."
+#                        align = center
+#                        multiline = yes
+#                        autoresize = yes
+#                        maximumsize = { 480 -1 }
+#                    }
+#                }
+#            }
+#        }
+#    }

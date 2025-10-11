@@ -25,7 +25,7 @@
 
 ### Uboy.GUI_Examples
 # Import the panel types
-using gui_example_panel_types.gui
+#using gui_example_panel_types.gui
 
 # Define the sidebar position
 @example_sidebar_position = 640
@@ -757,9 +757,44 @@ types information_panel_bar_types {
 					input_action = map_list
 				}
 
-                gui_example_sidebar_button ={}
+                ### Uboy.GUI_Examples
+                #gui_example_sidebar_button ={}
+				sidebar_label_button = {
+					position = { -100 @example_sidebar_position }
+					blockoverride "onclick" {
+						onclick = "[GetVariableSystem.Toggle('gui_example_panel_open')]"
+					}
+				}
+				sidebar_label_text = {
+					position = { -100 @example_sidebar_position }
+					raw_text = "GUI Examples"
+				}
+				widget = {
+					position = { 0 @example_sidebar_position }
+					name = "tutorial_highlight_example_sidebar"
+					using = clickthrough_blocker
+					using = sidebar_button_size
+					using = selected_sidepanel_animation
+					blockoverride "selected_visibility" {
+						visible = "[GetVariableSystem.Exists('gui_example_panel_open')]"
+					}
+					sidepanel_button_big = {
+						blockoverride "icon" {
+							texture = "gfx/interface/main_hud/budget_btn.dds"
+						}
+						blockoverride "button_selected" {
+							visible = "[GetVariableSystem.Exists('gui_example_panel_open')]"
+						}
+						onclick = "[GetVariableSystem.Toggle('gui_example_panel_open')]"
+					}
+				}
+				sidebar_tooltip_area = {
+					position = { 0 @example_sidebar_position }
+					raw_tooltip = "GUI examples panel"
+				}
+                ### Uboy.GUI_Examples END
 			}
-		}
+        }
 	}
 
 	type power_bloc_icon_button_widget = widget {
@@ -806,63 +841,67 @@ template sidebar_button_size_small {
 ###############################################
 # SIDEBAR BUTTON TYPE FOR GUI EXAMPLE
 ###############################################
-types gui_example_sidebar_types {
-    
-    type gui_example_sidebar_button = widget {
-        
-        # Label button (appears when hovering over sidebar)
-        sidebar_label_button = {
-            position = { -100 @example_sidebar_position }
-            blockoverride "onclick" {
-                enabled = "[GetMetaPlayer.GetPlayedOrObservedCountry.IsValid]"
-                onclick = "[InformationPanelBar.OpenPanelCycleTabs('gui_example_panel', 'default|layouts|advanced')]"
-            }
-        }
-        
-        # Label text
-        sidebar_label_text = {
-            position = { -100 @example_sidebar_position }
-            raw_text = "GUI Sample"
-        }
-        
-        # Main sidebar button
-        widget = {
-            position = { 0 @example_sidebar_position }
-            name = "tutorial_highlight_gui_examples_panel"
-            using = clickthrough_blocker
-            using = sidebar_button_size
-            using = selected_sidepanel_animation
-            
-            enabled = "[GetMetaPlayer.GetPlayedOrObservedCountry.IsValid]"
-            
-            # Highlight when panel is open
-            blockoverride "selected_visibility" {
-                visible = "[InformationPanelBar.IsPanelOpen('gui_example_panel')]"
-            }
-            
-            sidepanel_button_big = {
-                # Button icon
-                blockoverride "icon" {
-                    texture = "gfx/interface/main_hud/pol_btn.dds"
-                }
-                
-                # Selected state
-                blockoverride "button_selected" {
-                    visible = "[InformationPanelBar.IsPanelOpen('gui_example_panel')]"
-                }
-                
-                # Click action
-                enabled = "[GetMetaPlayer.GetPlayedOrObservedCountry.IsValid]"
-                onclick = "[InformationPanelBar.OpenPanelCycleTabs('gui_example_panel', 'default|layouts|advanced')]"
-            }
-        }
-        
-        # Tooltip area
-        sidebar_tooltip_area = {
-            position = { 0 @example_sidebar_position }
-            raw_tooltip = "Show GUI Sample Panel - Demonstrates basic GUI modding techniques"
-        }
-    }
-}
+
+#types gui_example_sidebar_types {
+#    
+#    type gui_example_sidebar_button = widget {
+#        
+#        # Label button (appears when hovering over sidebar)
+#        sidebar_label_button = {
+#            position = { -100 @example_sidebar_position }
+#            blockoverride "onclick" {
+#                enabled = "[GetMetaPlayer.GetPlayedOrObservedCountry.IsValid]"
+#                onclick = "[InformationPanelBar.OpenPanelCycleTabs('gui_example_panel', 'default')]"
+#            }
+#        }
+#        
+#        # Label text
+#        sidebar_label_text = {
+#            position = { -100 @example_sidebar_position }
+#            raw_text = "GUI Tutorial"
+#        }
+#        
+#        # Main sidebar button widget
+#        widget = {
+#            position = { 0 @example_sidebar_position }
+#            name = "tutorial_highlight_gui_examples_panel"
+#            using = clickthrough_blocker
+#            using = sidebar_button_size
+#            using = selected_sidepanel_animation
+#            
+#            enabled = "[GetMetaPlayer.GetPlayedOrObservedCountry.IsValid]"
+#            
+#            # Highlight when panel is open
+#            blockoverride "selected_visibility" {
+#                visible = "[InformationPanelBar.IsPanelOpen('gui_example_panel')]"
+#            }
+#            
+#            # The actual button
+#            sidepanel_button_big = {
+#                # Button icon
+#                blockoverride "icon" {
+#                    texture = "gfx/interface/main_hud/pol_btn.dds"
+#                }
+#                
+#                # Selected state
+#                blockoverride "button_selected" {
+#                    visible = "[InformationPanelBar.IsPanelOpen('gui_example_panel')]"
+#                }
+#                
+#                # Click action
+#                enabled = "[GetMetaPlayer.GetPlayedOrObservedCountry.IsValid]"
+#                onclick = "[InformationPanelBar.OpenPanelCycleTabs('gui_example_panel', 'default')]"
+#            }
+#        }
+#        
+#        # Tooltip area
+#        sidebar_tooltip_area = {
+#            position = { 0 @example_sidebar_position }
+#            raw_tooltip = "Open GUI Tutorial Panel - Learn basic GUI modding"
+#        }
+#    }
+#}
+
+
 
 ### Uboy.GUI_Examples END
