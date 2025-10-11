@@ -12,11 +12,11 @@
 # This tells the game to load tutorial_panels.gui and look for
 # a widget named "gui_example_panels_widget"
 
-gui/gui_example_panels.gui = gui_example_panels_widget
+# gui/gui_example_panels.gui = gui_example_panels_widget
 
 # Register the button widget
 # This creates the button that opens the tutorial panel
-gui/gui_example_panels.gui = gui_example_panel_button
+# gui/gui_example_panels.gui = gui_example_panel_button
 
 ############################################
 # NOTES FOR MODDERS

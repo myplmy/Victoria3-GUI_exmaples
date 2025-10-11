@@ -1,338 +1,419 @@
 ﻿############################################
 # GUI MODDING TUTORIAL - PANEL TYPES
+# InformationPanelBar Compatible Version
 ############################################
-# This file defines custom panel types that demonstrate
-# various GUI modding techniques for beginners
 
 # Define panel width constants (standard Victoria 3 convention)
 @panel_width = 540
 @panel_width_half = 270
+@panel_width_plus_14 = 554
 
-# Type definition block - all custom types must be wrapped in a types block
+###############################################
+# TYPE DEFINITIONS
+###############################################
 types gui_example_panel_types {
     
     ###############################################
-    # TUTORIAL SIDE PANEL
+    # GUI EXAMPLE PANEL - InformationPanel Compatible
     ###############################################
-    # This demonstrates a basic side panel that can be opened/closed
-    # Side panels appear on the left or right side of the screen
+    # This panel is compatible with InformationPanelBar system
+    # and includes tab functionality
     
     type gui_example_panel = default_block_window {
         name = "gui_example_panel"
         
-        # CRITICAL: Set the correct layer to prevent overlay issues
-        # layer_ingame_menu ensures this panel plays nicely with other UI
+        # Layer setting for proper UI stacking
         layer = layer_ingame_menu
         
-        # Control panel visibility using the variable system
-        # This checks if the variable 'gui_example_panel_open_window' is set to 'gui_example_panel'
-        visible = "[GetVariableSystem.HasValue('gui_example_panel_open_window', 'gui_example_panel')]"
-        
-        # Define the animation behavior when showing the panel
+        # Animation states for opening/closing
         blockoverride "animation_state_block" {
             state = {
                 name = _show
-                
-                # Close other panels before showing this one to prevent conflicts
+                # Close other panels when this one opens
                 on_finish = "[InformationPanelBar.ClosePanel]"
                 on_finish = "[MapListPanelManager.CloseCurrentPanel]"
                 
-                # Optional: Add sound effects (uncomment to use)
-                # start_sound = {
-                #     soundeffect = "event:/SFX/UI/SideBar/outliner_open"
-                # }
+                # Optional: Add sound effects
+                start_sound = {
+                    soundeffect = "event:/SFX/UI/SideBar/outliner_open"
+                }
             }
             
-            # Animation when hiding the panel
             state = {
                 name = _hide
-                # Optional: Add sound effects
-                # start_sound = {
-                #     soundeffect = "event:/SFX/UI/SideBar/outliner_close"
-                # }
+                start_sound = {
+                    soundeffect = "event:/SFX/UI/SideBar/outliner_close"
+                }
             }
         }
         
-        # Define the actual panel content
-        blockoverride "window_content" {
+        ###############################################
+        # PANEL HEADER
+        ###############################################
+        blockoverride "window_header_name" {
+            raw_text = "GUI Modding Tutorial"
+        }
+        
+        ###############################################
+        # TAB BUTTONS (Fixed Top Section)
+        ###############################################
+        blockoverride "fixed_top" {
             
-            # Main container for panel content
-            container = {
+            # Tab button container
+            tab_buttons = {
                 
-                ###############################################
-                # PANEL HEADER
-                ###############################################
-                widget = {
-                    size = { @panel_width 60 }
-                    
-                    # Header background
-                    background = {
-                        using = dark_area
-                        margin = { 10 5 }
-                    }
-                    
-                    # Title text
-                    textbox = {
-                        parentanchor = center
-                        size = { 90% 100% }
-                        raw_text = "GUI Modding Tutorial Panel"
-                        align = center|nobaseline
-                        using = fontsize_xxl
-                        elide = right
-                    }
-                    
-                    # Close button
-                    button_close = {
-                        parentanchor = right|vcenter
-                        position = { -10 0 }
-                        size = { 30 30 }
-                        
-                        # Clear the variable to hide the panel
-                        onclick = "[GetVariableSystem.Clear('gui_example_panel_open_window')]"
-                        
-                        raw_tooltip ="Close Panel"
+                # TAB 1: Basic Elements
+                blockoverride "first_button" {
+                    raw_text = "Basic Elements"
+                }
+                blockoverride "first_button_tooltip" {
+                    raw_tooltip = "Basic GUI elements like text, buttons, and icons"
+                }
+                blockoverride "first_button_click" {
+                    onclick = "[InformationPanel.SelectTab('default')]"
+                }
+                blockoverride "first_button_visibility" {
+                    visible = "[InformationPanel.IsTabSelected('default')]"
+                }
+                blockoverride "first_button_visibility_checked" {
+                    visible = "[Not(InformationPanel.IsTabSelected('default'))]"
+                }
+                blockoverride "first_button_selected" {
+                    raw_text = "Basic Elements"
+                }
+                
+                # TAB 2: Layouts
+                blockoverride "second_button" {
+                    raw_text = "Layouts"
+                }
+                blockoverride "second_button_tooltip" {
+                    raw_tooltip = "Container layouts and positioning"
+                }
+                blockoverride "second_button_click" {
+                    onclick = "[InformationPanel.SelectTab('layouts')]"
+                }
+                blockoverride "second_button_visibility" {
+                    visible = "[InformationPanel.IsTabSelected('layouts')]"
+                }
+                blockoverride "second_button_visibility_checked" {
+                    visible = "[Not(InformationPanel.IsTabSelected('layouts'))]"
+                }
+                blockoverride "second_button_selected" {
+                    raw_text = "Layouts"
+                }
+                
+                # TAB 3: Advanced
+                blockoverride "third_button" {
+                    raw_text = "Advanced"
+                }
+                blockoverride "third_button_tooltip" {
+                    raw_tooltip = "Advanced techniques and examples"
+                }
+                blockoverride "third_button_click" {
+                    onclick = "[InformationPanel.SelectTab('advanced')]"
+                }
+                blockoverride "third_button_visibility" {
+                    visible = "[InformationPanel.IsTabSelected('advanced')]"
+                }
+                blockoverride "third_button_visibility_checked" {
+                    visible = "[Not(InformationPanel.IsTabSelected('advanced'))]"
+                }
+                blockoverride "third_button_selected" {
+                    raw_text = "Advanced"
+                }
+            }
+        }
+        
+        ###############################################
+        # SCROLLABLE CONTENT AREA
+        ###############################################
+        blockoverride "scrollarea_content" {
+            
+            ###############################################
+            # TAB 1 CONTENT: Basic Elements
+            ###############################################
+            flowcontainer = {
+                visible = "[InformationPanel.IsTabSelected('default')]"
+                direction = vertical
+                using = default_list_position
+                spacing = 10
+                minimumsize = { @panel_width_plus_14 -1 }
+                maximumsize = { @panel_width_plus_14 -1 }
+                
+                # Section Header
+                default_header = {
+                    blockoverride "text" {
+                        raw_text = "Text Display Examples"
                     }
                 }
                 
-                ###############################################
-                # PANEL BODY - SCROLLABLE CONTENT AREA
-                ###############################################
+                # Simple text box
                 widget = {
-                    position = { 0 60 }
-                    size = { @panel_width 700 }
+                    size = { @panel_width 80 }
                     
-                    # Scrollbar for content
-                    scrollarea = {
-                        size = { 100% 100% }
+                    background = {
+                        using = default_background
+                    }
+                    
+                    textbox = {
+                        parentanchor = center
+                        size = { 90% 90% }
+                        raw_text = "This is a basic textbox.\\n\\nYou can display multi-line text and various formatting options."
+                        align = left|top
+                        multiline = yes
+                        autoresize = yes
+                        maximumsize = { 480 -1 }
+                    }
+                }
+                
+                # Button example
+                default_header = {
+                    blockoverride "text" {
+                        raw_text = "Button Examples"
+                    }
+                }
+                
+                widget = {
+                    size = { @panel_width 100 }
+                    
+                    background = {
+                        using = default_background
+                    }
+                    
+                    flowcontainer = {
+                        direction = vertical
+                        parentanchor = center
+                        spacing = 10
                         
-                        scrollbarpolicy_horizontal = always_off
-                        scrollbarpolicy_vertical = as_needed
+                        button = {
+                            size = { 200 40 }
+                            using = default_button
+                            
+                            textbox = {
+                                parentanchor = center
+                                raw_text = "Example Button"
+                                align = center|nobaseline
+                            }
+                            
+                            raw_tooltip = "This is a demonstration button"
+                        }
+                    }
+                }
+                
+                # Icons example
+                default_header = {
+                    blockoverride "text" {
+                        raw_text = "Icon Examples"
+                    }
+                }
+                
+                widget = {
+                    size = { @panel_width 80 }
+                    
+                    background = {
+                        using = default_background
+                    }
+                    
+                    flowcontainer = {
+                        direction = horizontal
+                        parentanchor = center
+                        spacing = 15
                         
-                        # Scrollbar widget
-                        scrollbar_vertical = {
-                            using = vertical_scrollbar
+                        icon = {
+                            size = { 40 40 }
+                            texture = "gfx/interface/icons/generic_icons/population.dds"
+                            raw_tooltip = "Population Icon"
                         }
                         
-                        # Content container that will scroll
-                        scrollwidget = {
-                            container = {
-                                
-                                # Vertical flow container for stacking elements
-                                flowcontainer = {
-                                    direction = vertical
-                                    spacing = 10
-                                    margin = { 15 15 }
-                                    
-                                    ###############################################
-                                    # SECTION 1: BASIC TEXT DISPLAY
-                                    ###############################################
-                                    widget = {
-                                        size = { @panel_width_half 100 }
-                                        
-                                        background = {
-                                            using = default_background
-                                        }
-                                        
-                                        textbox = {
-                                            parentanchor = center
-                                            size = { 90% 90% }
-                                            raw_text = "Section 1: Text Display | This demonstrates basic text rendering in Victoria 3 GUI.You can use multiline text and various formatting options."
-                                            align = left|top
-                                            multiline = yes
-                                            autoresize = yes
-                                            maximumsize = { 480 -1 }
-                                        }
-                                    }
-                                    
-                                    ###############################################
-                                    # SECTION 2: BUTTONS
-                                    ###############################################
-                                    widget = {
-                                        size = { @panel_width_half 150 }
-                                        
-                                        background = {
-                                            using = default_background
-                                        }
-                                        
-                                        flowcontainer = {
-                                            direction = vertical
-                                            parentanchor = center
-                                            spacing = 10
-                                            
-                                            textbox = {
-                                                autoresize = yes
-                                                raw_text = "Section 2: Interactive Buttons"
-                                                align = center
-                                                using = fontsize_large
-                                            }
-                                            
-                                            # Example button that does nothing (for demonstration)
-                                            button = {
-                                                size = { 200 40 }
-                                                using = default_button
-                                                
-                                                textbox = {
-                                                    parentanchor = center
-                                                    raw_text = "Example Button"
-                                                    align = center|nobaseline
-                                                }
-                                                
-                                                raw_tooltip ="This is a demonstration button \\n Buttons can trigger various actions"
-                                                
-                                                # Uncomment to add functionality:
-                                                # onclick = "[YourFunctionHere]"
-                                            }
-                                        }
-                                    }
-                                    
-                                    ###############################################
-                                    # SECTION 3: ICONS AND IMAGES
-                                    ###############################################
-                                    widget = {
-                                        size = { @panel_width_half 120 }
-                                        
-                                        background = {
-                                            using = default_background
-                                        }
-                                        
-                                        flowcontainer = {
-                                            direction = vertical
-                                            parentanchor = center
-                                            spacing = 10
-                                            
-                                            textbox = {
-                                                autoresize = yes
-                                                raw_text = "Section 3: Icons"
-                                                align = center
-                                                using = fontsize_large
-                                            }
-                                            
-                                            flowcontainer = {
-                                                direction = horizontal
-                                                spacing = 10
-                                                
-                                                # Example icons from the base game
-                                                icon = {
-                                                    size = { 40 40 }
-                                                    texture = "gfx/interface/icons/generic_icons/population.dds"
-                                                    raw_tooltip ="Population Icon"
-                                                }
-                                                
-                                                icon = {
-                                                    size = { 40 40 }
-                                                    texture = "gfx/interface/icons/generic_icons/trade.dds"
-                                                    raw_tooltip ="Trade Icon"
-                                                }
-                                                
-                                            }
-                                        }
-                                    }
-                                    
-                                    ###############################################
-                                    # SECTION 4: PROGRESS BARS
-                                    ###############################################
-                                    widget = {
-                                        size = { @panel_width_half 100 }
-                                        
-                                        background = {
-                                            using = default_background
-                                        }
-                                        
-                                        flowcontainer = {
-                                            direction = vertical
-                                            parentanchor = center
-                                            spacing = 10
-                                            margin = { 10 10 }
-                                            
-                                            textbox = {
-                                                autoresize = yes
-                                                raw_text = "Section 4: Progress Bars"
-                                                align = center
-                                                using = fontsize_large
-                                            }
-                                            
-                                            # Progress bar example
-                                            progressbar_standard = {
-                                                size = { 240 20 }
-                                                value = 0.7
-                                                raw_tooltip ="Example progress bar at 70%"
-                                            }
-                                        }
-                                    }
-                                    
-                                    ###############################################
-                                    # SECTION 5: HORIZONTAL LAYOUTS
-                                    ###############################################
-                                    widget = {
-                                        size = { @panel_width_half 100 }
-                                        
-                                        background = {
-                                            using = default_background
-                                        }
-                                        
-                                        flowcontainer = {
-                                            direction = vertical
-                                            parentanchor = center
-                                            spacing = 10
-                                            
-                                            textbox = {
-                                                autoresize = yes
-                                                raw_text = "Section 5: Horizontal Box Layout"
-                                                align = center
-                                                using = fontsize_large
-                                            }
-                                            
-                                            # Horizontal box with multiple elements
-                                            hbox = {
-                                                spacing = 10
-                                                
-                                                textbox = {
-                                                    autoresize = yes
-                                                    raw_text = "Left"
-                                                    align = center|nobaseline
-                                                }
-                                                
-                                                widget = {
-                                                    size = { 2 30 }
-                                                    background = {
-                                                        using = dark_area
-                                                    }
-                                                }
-                                                
-                                                textbox = {
-                                                    autoresize = yes
-                                                    raw_text = "Center"
-                                                    align = center|nobaseline
-                                                }
-                                                
-                                                widget = {
-                                                    size = { 2 30 }
-                                                    background = {
-                                                        using = dark_area
-                                                    }
-                                                }
-                                                
-                                                textbox = {
-                                                    autoresize = yes
-                                                    raw_text = "Right"
-                                                    align = center|nobaseline
-                                                }
-                                            }
-                                        }
-                                    }
-                                    
-                                    ###############################################
-                                    # ADDITIONAL SECTIONS
-                                    ###############################################
-                                    # Add more sections here as needed for your tutorial
-                                    
-                                    # Spacer at the bottom
-                                    widget = {
-                                        size = { 1 20 }
-                                    }
-                                }
+                        icon = {
+                            size = { 40 40 }
+                            texture = "gfx/interface/icons/generic_icons/trade.dds"
+                            raw_tooltip = "Trade Icon"
+                        }
+                        
+                    }
+                }
+            }
+            
+            ###############################################
+            # TAB 2 CONTENT: Layouts
+            ###############################################
+            flowcontainer = {
+                visible = "[InformationPanel.IsTabSelected('layouts')]"
+                direction = vertical
+                using = default_list_position
+                spacing = 10
+                minimumsize = { @panel_width_plus_14 -1 }
+                maximumsize = { @panel_width_plus_14 -1 }
+                
+                # Horizontal layout example
+                default_header = {
+                    blockoverride "text" {
+                        raw_text = "Horizontal Box Layout"
+                    }
+                }
+                
+                widget = {
+                    size = { @panel_width 80 }
+                    
+                    background = {
+                        using = default_background
+                    }
+                    
+                    hbox = {
+                        parentanchor = center
+                        spacing = 10
+                        
+                        textbox = {
+                            autoresize = yes
+                            raw_text = "Left"
+                            align = center|nobaseline
+                        }
+                        
+                        widget = {
+                            size = { 2 30 }
+                            background = {
+                                using = dark_area
                             }
                         }
+                        
+                        textbox = {
+                            autoresize = yes
+                            raw_text = "Center"
+                            align = center|nobaseline
+                        }
+                        
+                        widget = {
+                            size = { 2 30 }
+                            background = {
+                                using = dark_area
+                            }
+                        }
+                        
+                        textbox = {
+                            autoresize = yes
+                            raw_text = "Right"
+                            align = center|nobaseline
+                        }
+                    }
+                }
+                
+                # Vertical layout example
+                default_header = {
+                    blockoverride "text" {
+                        raw_text = "Vertical Flow Container"
+                    }
+                }
+                
+                widget = {
+                    size = { @panel_width 120 }
+                    
+                    background = {
+                        using = default_background
+                    }
+                    
+                    flowcontainer = {
+                        direction = vertical
+                        parentanchor = center
+                        spacing = 5
+                        
+                        textbox = {
+                            autoresize = yes
+                            raw_text = "Item 1"
+                        }
+                        
+                        textbox = {
+                            autoresize = yes
+                            raw_text = "Item 2"
+                        }
+                        
+                        textbox = {
+                            autoresize = yes
+                            raw_text = "Item 3"
+                        }
+                    }
+                }
+                
+                # Progress bar example
+                default_header = {
+                    blockoverride "text" {
+                        raw_text = "Progress Bar"
+                    }
+                }
+                
+                widget = {
+                    size = { @panel_width 60 }
+                    
+                    background = {
+                        using = default_background
+                    }
+                    
+                    progressbar_standard = {
+                        parentanchor = center
+                        size = { 300 20 }
+                        value = 0.65
+                        raw_tooltip = "Example progress bar at 65%"
+                    }
+                }
+            }
+            
+            ###############################################
+            # TAB 3 CONTENT: Advanced
+            ###############################################
+            flowcontainer = {
+                visible = "[InformationPanel.IsTabSelected('advanced')]"
+                direction = vertical
+                using = default_list_position
+                spacing = 10
+                minimumsize = { @panel_width_plus_14 -1 }
+                maximumsize = { @panel_width_plus_14 -1 }
+                
+                default_header = {
+                    blockoverride "text" {
+                        raw_text = "Advanced Techniques"
+                    }
+                }
+                
+                # Description text
+                widget = {
+                    size = { @panel_width 150 }
+                    
+                    background = {
+                        using = default_background
+                    }
+                    
+                    textbox = {
+                        parentanchor = center
+                        size = { 90% 90% }
+                        raw_text = "Advanced GUI Modding Topics:\\n\\n• Data model integration\\n• Dynamic content\\n• Scripted GUIs\\n• Custom animations\\n• Complex interactions\\n\\nCheck the base game files in Victoria 3/game/gui/ for more examples!"
+                        align = left|top
+                        multiline = yes
+                        autoresize = yes
+                        maximumsize = { 480 -1 }
+                    }
+                }
+                
+                # Placeholder for future content
+                default_header = {
+                    blockoverride "text" {
+                        raw_text = "Coming Soon"
+                    }
+                }
+                
+                widget = {
+                    size = { @panel_width 80 }
+                    
+                    background = {
+                        using = default_background
+                    }
+                    
+                    textbox = {
+                        parentanchor = center
+                        raw_text = "More advanced examples will be added here.\\n\\nFor now, explore the base game GUI files and experiment!"
+                        align = center
+                        multiline = yes
+                        autoresize = yes
+                        maximumsize = { 480 -1 }
                     }
                 }
             }
