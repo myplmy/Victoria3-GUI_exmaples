@@ -39,18 +39,20 @@
                             container={
                                 datamodel = "[CompanyType.AccessBuildingTypes(GetPlayer.Self)]"
                                 item={
-                                    textbox={
-                                        raw_text = "[CompanyType.GetName]"
-                                        autoresize = yes
-                                        elide = right
-                                        max_width = 150
-                                    }
-                                    icon = {
-                                        size = { 50 50 }
-                                        texture = "[BuildingType.GetIcon]"
-                                        
-                                        tooltipwidget = {
-                                            FancyTooltip_BuildingType = {}
+                                    flowcontainer = {
+                                        icon = {
+                                            size = { 50 50 }
+                                            texture = "[CompanyType.GetIcon]"
+                                            
+                                            tooltipwidget = {
+                                                FancyTooltip_BuildingType = {}
+                                            }
+                                        }
+                                        textbox={
+                                            raw_text = "[CompanyType.GetName]"
+                                            autoresize = yes
+                                            elide = right
+                                            max_width = 150
                                         }
                                     }
                                 }
