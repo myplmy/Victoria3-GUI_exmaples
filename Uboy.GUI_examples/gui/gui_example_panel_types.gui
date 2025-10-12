@@ -7,31 +7,43 @@
 @panel_width = 540
 @panel_width_half = 270
 
-using gui_example.gui
-
 types gui_example_panel_types {
-    type gui_example_panel = default_block_window{
+    type gui_example_panel = default_block_window {
         name = "gui_example_panel"
-        visible = "[And(
-            GetVariableSystem.Exists('gui_example_panel_open'),
-            Not(InformationPanelBar.IsAnyPanelOpen())
-        )]"
+        visible = "[GetVariableSystem.Exists('gui_example_panel_open')]"
 
         blockoverride "animation_state_block"{
         }
 
         blockoverride "window_header_name"{
-            raw_text = "gui_example_panel_title"
+            raw_text = "gui example panel title"
         }
 
         blockoverride "header_close_button"{
             onclick = "[GetVariableSystem.Clear('gui_example_panel_open')]"
         }
 
+        widget = {
+            state = {
+                trigger_when = "[InformationPanelBar.IsAnyPanelOpen]"
+                on_finish = "[GetVariableSystem.Clear('gui_example_panel_open')]"
+            }
+        }
+
         # Main content area
-        blockoverride "entire_scrollarea" {
-            align = left
-            test_container = {}
+        blockoverride "scrollarea_content" {
+            ### TEST 1A ###
+            flowcontainer = {
+                using = default_content_fade
+                using = default_list_position
+                margin_bottom = 15
+                direction = vertical
+                #parentanchor = hcenter
+                spacing = 10
+                
+                test_container = {}
+            }
+            ### TEST END ###
         }
     }
 }

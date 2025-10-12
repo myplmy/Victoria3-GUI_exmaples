@@ -49,7 +49,6 @@ template information_panels {
 
     ### Uboy.GUI_examples
     gui_example_panel = {}
-    #gui_example_panel = {}
     ### Uboy.GUI_examples END
 }
 
