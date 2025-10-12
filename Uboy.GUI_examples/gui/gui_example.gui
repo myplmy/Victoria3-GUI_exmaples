@@ -4,58 +4,161 @@
         direction = vertical
         spacing = 20
         margin = { 10 10 }
-        
+        name = "test_container"
         background = {
             using = dark_area
         }
-        
+
+
+         ### ========== STEP 10 ========== ###
         flowcontainer = {
             direction = vertical
-            spacing = 5
-            
-            textbox = {
-                raw_text = "========== STEP 9: building types test =========="
-                autoresize = yes
-                default_format = "#bold"
-                align = hcenter|nobaseline
-            }
-            flowcontainer={
-                direction=vertical
-                spacing=5
-                textbox={
-                raw_text="building types"
-                autoresize=yes
+            spacing = 10
+            margin_bottom = 10
+
+            flowcontainer = {
+                direction = vertical
+                spacing = 10
+                datacontext = "[AccessPlayer.AccessCapital.AccessMarket]"
+                textbox = {
+                    raw_text = "========== STEP 10: goods types test =========="
+                    autoresize = yes
+                    default_format = "#bold"
+                    align = hcenter|nobaseline
                 }
-                flowcontainer={
-                    direction=horizontal
-                    spacing=5
-                    datamodel_wrap = 5  # 5개씩 줄바꿈
-                    dynamicgridbox = {
-                        datamodel = "[AccessPlayer.GetPotentialCompanies]"
-                        #datacontext = "[BUILDING_TYPE]"
-                        #datamodel = "[Building.GetBuildingType]"
+                dynamicgridbox = {
+                    datamodel = "[Market.GetGoodsSortedByBalance]" #
+                    datamodel_wrap = 30
                     
-                        item = {
-                            container={
-                                datamodel = "[CompanyType.AccessBuildingTypes(GetPlayer.Self)]"
-                                item={
-                                    flowcontainer = {
-                                        icon = {
-                                            size = { 50 50 }
-                                            texture = "[CompanyType.GetIcon]"
-                                            
-                                            tooltipwidget = {
-                                                FancyTooltip_BuildingType = {}
-                                            }
-                                        }
-                                        textbox={
-                                            raw_text = "[CompanyType.GetName]"
-                                            autoresize = yes
-                                            elide = right
-                                            max_width = 150
-                                        }
-                                    }
+                    item = {
+                        flowcontainer = {
+                            direction = horizontal
+                            spacing = 5
+                            flowcontainer = {
+                                autoresize = yes
+                                direction = horizontal
+                                icon={
+                                    size = { 25 25 }
+                                    texture = "[Goods.GetTexture]"
                                 }
+                                tooltipwidget = {
+                                    FancyTooltip_Goods = {}
+                                }
+                            }
+                            flowcontainer={
+                                    textbox = {
+                                    #parentanchor = center
+                                    raw_text = "[Goods.GetName] ([Goods.GetCategoryName]) <[Goods.GetBasePrice]£>"
+                                    autoresize = yes
+                                    align = left
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+
+         ### ========== STEP 9 ========== ###
+        flowcontainer = {
+            direction = vertical
+            spacing = 10
+            margin_bottom = 10
+            flowcontainer = {
+                direction = vertical
+                spacing = 5
+                # State 컨텍스트 필요 - StatesPanel이나 Country.AccessStates를 통해
+                datacontext = "[AccessPlayer]"  # 수도 State
+                datacontext = "[Country.AccessCapital]"
+                textbox = {
+                    raw_text = "========== STEP 9: State building types test =========="
+                    autoresize = yes
+                    default_format = "#bold"
+                    align = hcenter|nobaseline
+                }
+
+
+                ### 모든 건물
+                flowcontainer = {
+                    direction = vertical
+                    spacing = 10
+
+                    textbox = {
+                        text = "All Buildings in State"
+                        margin_top = 10
+                        margin_bottom = 10
+                    }
+                    
+                    dynamicgridbox = {
+                        datamodel = "[State.AccessBuildings]"  # ✅ 모든 건물
+                        datamodel_wrap = 2
+                        
+                        item = {
+                            button = {
+                                size = { 50 50 }
+                                texture = "[Building.GetBuildingType.GetIcon]"
+                                tooltipwidget = { FancyTooltip_Building = {} }
+                            }
+                        }
+                    }
+                }
+                flowcontainer = {
+                    ### 도시 건물만
+                    dynamicgridbox = {
+                        datamodel = "[State.AccessUrbanBuildings]"  # ✅ 도시 건물
+                        datamodel_wrap = 2
+                        
+                        item = {
+                            button = {
+                                size = { 50 50 }
+                                texture = "[Building.GetBuildingType.GetIcon]"
+                                tooltipwidget = { FancyTooltip_Building = {} }
+                            }
+                        }
+                    }
+                }
+                flowcontainer = {
+                    ### 농업 건물만
+                    dynamicgridbox = {
+                        datamodel = "[State.AccessUncappedRuralBuildings]"  # ✅ 농업
+                        datamodel_wrap = 2
+                        
+                        item = {
+                            button = {
+                                size = { 50 50 }
+                                texture = "[Building.GetBuildingType.GetIcon]"
+                                tooltipwidget = { FancyTooltip_Building = {} }
+                            }
+                        }
+                    }
+                }
+                flowcontainer = {
+                    ### 자원 건물만
+                    dynamicgridbox = {
+                        datamodel = "[State.AccessCappedRuralBuildings]"  # ✅ 자원
+                        datamodel_wrap = 2
+                        
+                        item = {
+                            button = {
+                                size = { 50 50 }
+                                texture = "[Building.GetBuildingType.GetIcon]"
+                                tooltipwidget = { FancyTooltip_Building = {} }
+                            }
+                        }
+                    }
+                }
+                flowcontainer = {
+                    ### 인프라 건물만
+                    dynamicgridbox = {
+                        datamodel = "[State.AccessDevelopmentBuildings]"  # ✅ 인프라
+                        datamodel_wrap = 2
+                        
+                        item = {
+                            button = {
+                                size = { 50 50 }
+                                texture = "[Building.GetBuildingType.GetIcon]"
+                                tooltipwidget = { FancyTooltip_Building = {} }
                             }
                         }
                     }
@@ -68,7 +171,7 @@
         flowcontainer = {
             direction = vertical
             spacing = 5
-            
+
             textbox = {
                 raw_text = "========== STEP 1A: Variable Test =========="
                 autoresize = yes
