@@ -2,7 +2,7 @@
   "name" : "Uboy.GUI_example",
   "id" : "uboy.gui.example",
   "version" : "1.0.0",
-  "supported_game_version" : "1.10.*",
+  "supported_game_version" : "1.11.*",
   "picture": "thumbnail.png",
   "short_description" : "example codes for gui modding",
   "tags" : ["Utilities"],
