@@ -10,12 +10,95 @@
         }
 
 
+         ### ========== STEP 11 ========== ###
+        flowcontainer = {
+            direction = vertical
+            spacing = 10
+            margin_bottom = 10
+            margin_left = 10
+            flowcontainer = {
+                direction = vertical
+                spacing = 10
+                datacontext = "[AccessPlayer.AccessCapital.AccessMarket]"
+                textbox = {
+                    raw_text = "========== STEP 11: goods producing building test =========="
+                    autoresize = yes
+                    default_format = "#bold"
+                    align = hcenter|nobaseline
+                }
+                dynamicgridbox = {
+                    datamodel = "[Market.GetGoodsSortedByBalance]" 
+                    datamodel_wrap = 1
+                    flipdirection = yes
+                    
+                    item = {
+                        flowcontainer = {
+                            direction = horizontal
+                            spacing = 5
+                            margin_left = 5
+                            flowcontainer = {
+                                direction = horizontal
+                                icon={
+                                    size = { 25 25 }
+                                    texture = "[Goods.GetTexture]"
+                                }
+                                tooltipwidget = {
+                                    FancyTooltip_Goods = {}
+                                }
+                            }
+                            flowcontainer={
+                                direction = horizontal
+                                spacing = 5
+                                margin_top = 10
+                                margin_bottom = 10
+                                dynamicgridbox ={
+                                    datamodel = "[Goods.AccessBuildingsProducingThis]"
+                                    datamodel_wrap = 3
+                                    flipdirection = yes
+                                    item={
+                                        flowcontainer={
+                                            icon = {
+                                                size = { 50 50 }
+                                                texture = "[BuildingType.GetIcon]"
+                                                tooltipwidget = {
+                                                    FancyTooltip_BuildingType = {}
+                                                }
+                                            }
+                                            textbox ={
+                                                margin = { 2 10 }
+                                                autoresize = yes
+                                                raw_text = "[BuildingType.GetName]"
+                                            }
+                                        }
+                                        #icon={
+                                        #    size = { 50, 50}
+                                        #    texture = "[Building.GetBuildingType.GetIcon]"
+                                        #}
+                                    }
+                                }
+
+                                #textbox = {
+                                #    raw_text = "[Goods.GetBuildingsProducingThisDesc]"
+                                #    autoresize = yes
+                                #    align = left
+                                #    max_width = 400
+                                #    elide = right
+                                #}
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+
+
          ### ========== STEP 10 ========== ###
         flowcontainer = {
             direction = vertical
             spacing = 10
             margin_bottom = 10
-
+            margin_left = 10
             flowcontainer = {
                 direction = vertical
                 spacing = 10
@@ -34,8 +117,8 @@
                         flowcontainer = {
                             direction = horizontal
                             spacing = 5
+                            margin_left = 5
                             flowcontainer = {
-                                autoresize = yes
                                 direction = horizontal
                                 icon={
                                     size = { 25 25 }
@@ -85,7 +168,7 @@
                     spacing = 10
 
                     textbox = {
-                        text = "All Buildings in State"
+                        raw_text = "All Buildings in State"
                         margin_top = 10
                         margin_bottom = 10
                     }
