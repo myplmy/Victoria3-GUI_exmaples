@@ -10,6 +10,7 @@
 types gui_example_panel_types {
     type gui_example_panel = default_block_window {
         name = "gui_example_panel"
+        # Panel is visible when 'gui_example_panel_open' variable exists
         visible = "[GetVariableSystem.Exists('gui_example_panel_open')]"
 
         blockoverride "animation_state_block"{
@@ -20,22 +21,27 @@ types gui_example_panel_types {
         }
 
         blockoverride "header_close_button"{
+            # Clear the 'gui_example_panel_open' variable when close button is clicked
             onclick = "[GetVariableSystem.Clear('gui_example_panel_open')]"
         }
 
         widget = {
             state = {
+                # Auto-close this panel when another panel opens
                 trigger_when = "[InformationPanelBar.IsAnyPanelOpen]"
                 on_finish = "[GetVariableSystem.Clear('gui_example_panel_open')]"
             }
         }
 
-        # Main content area
+        # Main content area of the panel
         blockoverride "scrollarea_content" {
             container = {
                 parentanchor = hcenter
                 
+                # ========================================
                 # TAB 1 CONTENT
+                # ========================================
+                # Visible when 'gui_tab2_open' variable does not exist (Tab 1 is selected)
                 flowcontainer = {
                     visible = "[And(
                         GetVariableSystem.Exists('gui_example_panel_open'),
@@ -52,7 +58,10 @@ types gui_example_panel_types {
                     ### TEST END ###
                 }
                 
-                # TAB 2 CONTENT - 두번째 탭 (비어있음)
+                # ========================================
+                # TAB 2 CONTENT - Second tab (empty)
+                # ========================================
+                # Visible when 'gui_tab2_open' variable exists (Tab 2 is selected)
                 flowcontainer = {
                     visible = "[And(
                         GetVariableSystem.Exists('gui_example_panel_open'),
@@ -64,13 +73,17 @@ types gui_example_panel_types {
                     direction = vertical
                     spacing = 10
                     
-                    # 두번째 탭 콘텐츠
+                    # Add Tab 2 content here
                 }
             }
         }
         
+        # ========================================
+        # TAB BUTTONS DEFINITION
+        # ========================================
         blockoverride "fixed_top" {
             tab_buttons = {
+                # Tab 1 Button
                 blockoverride "first_button" {
                     text = "Tab 1"
                 }
@@ -78,11 +91,14 @@ types gui_example_panel_types {
                     tooltip = "Tab 1"
                 }
                 blockoverride "first_button_click" {
+                    # Clear 'gui_tab2_open' variable to switch to Tab 1
                     onclick = "[GetVariableSystem.Clear('gui_tab2_open')]"
                 }
+                # Display when Tab 1 is selected (gui_tab2_open does not exist)
                 blockoverride "first_button_visibility" {
                     visible = "[Not(GetVariableSystem.Exists('gui_tab2_open'))]"
                 }
+                # Display when Tab 1 is not selected (gui_tab2_open exists)
                 blockoverride "first_button_visibility_checked" {
                     visible = "[GetVariableSystem.Exists('gui_tab2_open')]"
                 }
@@ -90,6 +106,7 @@ types gui_example_panel_types {
                     text = "Tab 1"
                 }
                 
+                # Tab 2 Button
                 blockoverride "second_button" {
                     text = "Tab 2"
                 }
@@ -97,11 +114,14 @@ types gui_example_panel_types {
                     tooltip = "Tab 2"
                 }
                 blockoverride "second_button_click" {
+                    # Set 'gui_tab2_open' variable to switch to Tab 2
                     onclick = "[GetVariableSystem.Set('gui_tab2_open','tab2')]"
                 }
+                # Display when Tab 2 is selected (gui_tab2_open exists)
                 blockoverride "second_button_visibility" {
                     visible = "[GetVariableSystem.Exists('gui_tab2_open')]"
                 }
+                # Display when Tab 2 is not selected (gui_tab2_open does not exist)
                 blockoverride "second_button_visibility_checked" {
                     visible = "[Not(GetVariableSystem.Exists('gui_tab2_open'))]"
                 }
