@@ -91,3 +91,40 @@ com_clear_extetion_building_type = {
     }
 }
 
+
+
+uboy_toggle_section_1 = {
+    effect = {
+        if = {
+            limit = { has_variable = uboy_section_1_expanded }
+            remove_variable = uboy_section_1_expanded
+        }
+        else = {
+            set_variable = uboy_section_1_expanded
+        }
+    }
+}
+
+uboy_toggle_section_goods = {
+    effect = {
+        if = {
+            limit = { has_variable = uboy_section_goods_expanded }
+            remove_variable = uboy_section_goods_expanded
+        }
+        else = {
+            set_variable = uboy_section_goods_expanded
+        }
+    }
+}
+
+uboy_toggle_section_buildings = {
+    effect = {
+        if = {
+            limit = { has_variable = uboy_section_buildings_expanded }
+            remove_variable = uboy_section_buildings_expanded
+        }
+        else = {
+            set_variable = uboy_section_buildings_expanded
+        }
+    }
+}
