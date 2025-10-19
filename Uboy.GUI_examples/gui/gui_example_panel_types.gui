@@ -53,9 +53,9 @@ types gui_example_panel_types {
                     direction = vertical
                     spacing = 10
                     
-                    ### TEST 1A ###
+                    # Add Tab 1 content here
                     test_container = {}
-                    ### TEST END ###
+
                 }
                 
                 # ========================================
@@ -74,6 +74,8 @@ types gui_example_panel_types {
                     spacing = 10
                     
                     # Add Tab 2 content here
+                    gui_example_test_step2 = {}
+
                 }
             }
         }
@@ -85,7 +87,7 @@ types gui_example_panel_types {
             tab_buttons = {
                 # Tab 1 Button
                 blockoverride "first_button" {
-                    text = "Tab 1"
+                    raw_text = "Tab 1"
                 }
                 blockoverride "first_button_tooltip" {
                     tooltip = "Tab 1"
@@ -103,12 +105,12 @@ types gui_example_panel_types {
                     visible = "[GetVariableSystem.Exists('gui_tab2_open')]"
                 }
                 blockoverride "first_button_selected" {
-                    text = "Tab 1"
+                    raw_text = "Tab 1 Selected"
                 }
                 
                 # Tab 2 Button
                 blockoverride "second_button" {
-                    text = "Tab 2"
+                    raw_text = "Tab 2"
                 }
                 blockoverride "second_button_tooltip" {
                     tooltip = "Tab 2"
@@ -126,7 +128,7 @@ types gui_example_panel_types {
                     visible = "[Not(GetVariableSystem.Exists('gui_tab2_open'))]"
                 }
                 blockoverride "second_button_selected" {
-                    text = "Tab 2"
+                    raw_text = "Tab 2 Selected"
                 }
             }
         }
