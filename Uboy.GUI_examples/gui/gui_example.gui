@@ -1,259 +1,18 @@
 ﻿types company_filter_test
 {
+    type uboy_test_flowcontainer = flowcontainer {
+        direction = vertical
+        margin_left= 10
+        name = "uboy_test_flowcontainer"
+    }
+
     type test_container = flowcontainer {
         direction = vertical
-        spacing = 20
-        margin = { 10 10 }
         name = "test_container"
-        background = {
-            using = dark_area
-        }
 
-
-         ### ========== STEP 11 ========== ###
-        flowcontainer = {
-            direction = vertical
-            spacing = 10
-            margin_bottom = 10
-            margin_left = 10
-            flowcontainer = {
-                direction = vertical
-                spacing = 10
-                datacontext = "[AccessPlayer.AccessCapital.AccessMarket]"
-                textbox = {
-                    raw_text = "========== STEP 11: goods producing building test =========="
-                    autoresize = yes
-                    default_format = "#bold"
-                    align = hcenter|nobaseline
-                }
-                dynamicgridbox = {
-                    datamodel = "[Market.GetGoodsSortedByBalance]" 
-                    datamodel_wrap = 1
-                    flipdirection = yes
-                    
-                    item = {
-                        flowcontainer = {
-                            direction = horizontal
-                            spacing = 5
-                            margin_left = 5
-                            flowcontainer = {
-                                direction = horizontal
-                                icon={
-                                    size = { 25 25 }
-                                    texture = "[Goods.GetTexture]"
-                                }
-                                tooltipwidget = {
-                                    FancyTooltip_Goods = {}
-                                }
-                            }
-                            flowcontainer={
-                                direction = horizontal
-                                spacing = 5
-                                margin_top = 10
-                                margin_bottom = 10
-                                dynamicgridbox ={ ###dynamic grid box inside of the dynamic grid box
-                                    datamodel = "[Goods.AccessBuildingsProducingThis]"
-                                    datamodel_wrap = 3
-                                    flipdirection = yes
-                                    item={
-                                        flowcontainer={
-                                            icon = {
-                                                size = { 50 50 }
-                                                texture = "[BuildingType.GetIcon]"
-                                                tooltipwidget = {
-                                                    FancyTooltip_BuildingType = {}
-                                                }
-                                            }
-                                            textbox ={
-                                                margin = { 2 10 }
-                                                autoresize = yes
-                                                raw_text = "[BuildingType.GetName]"
-                                            }
-                                        }
-                                        #icon={
-                                        #    size = { 50, 50}
-                                        #    texture = "[Building.GetBuildingType.GetIcon]"
-                                        #}
-                                    }
-                                }
-
-                                #textbox = {
-                                #    raw_text = "[Goods.GetBuildingsProducingThisDesc]"
-                                #    autoresize = yes
-                                #    align = left
-                                #    max_width = 400
-                                #    elide = right
-                                #}
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-
-
-         ### ========== STEP 10 ========== ###
-        flowcontainer = {
-            direction = vertical
-            spacing = 10
-            margin_bottom = 10
-            margin_left = 10
-            flowcontainer = {
-                direction = vertical
-                spacing = 10
-                datacontext = "[AccessPlayer.AccessCapital.AccessMarket]"
-                textbox = {
-                    raw_text = "========== STEP 10: goods types test =========="
-                    autoresize = yes
-                    default_format = "#bold"
-                    align = hcenter|nobaseline
-                }
-                dynamicgridbox = {
-                    datamodel = "[Market.GetGoodsSortedByBalance]" #
-                    datamodel_wrap = 30
-                    
-                    item = {
-                        flowcontainer = {
-                            direction = horizontal
-                            spacing = 5
-                            margin_left = 5
-                            flowcontainer = {
-                                direction = horizontal
-                                icon={
-                                    size = { 25 25 }
-                                    texture = "[Goods.GetTexture]"
-                                }
-                                tooltipwidget = {
-                                    FancyTooltip_Goods = {}
-                                }
-                            }
-                            flowcontainer={
-                                    textbox = {
-                                    #parentanchor = center
-                                    raw_text = "[Goods.GetName] ([Goods.GetCategoryName]) <[Goods.GetBasePrice]£>"
-                                    autoresize = yes
-                                    align = left
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-
-         ### ========== STEP 9 ========== ###
-        flowcontainer = {
-            direction = vertical
-            spacing = 10
-            margin_bottom = 10
-            flowcontainer = {
-                direction = vertical
-                spacing = 5
-                # State 컨텍스트 필요 - StatesPanel이나 Country.AccessStates를 통해
-                datacontext = "[AccessPlayer]"  # 수도 State
-                datacontext = "[Country.AccessCapital]"
-                textbox = {
-                    raw_text = "========== STEP 9: State building types test =========="
-                    autoresize = yes
-                    default_format = "#bold"
-                    align = hcenter|nobaseline
-                }
-
-
-                ### 모든 건물
-                flowcontainer = {
-                    direction = vertical
-                    spacing = 10
-
-                    textbox = {
-                        raw_text = "All Buildings in State"
-                        margin_top = 10
-                        margin_bottom = 10
-                    }
-                    
-                    dynamicgridbox = {
-                        datamodel = "[State.AccessBuildings]"  # ✅ 모든 건물
-                        datamodel_wrap = 2
-                        
-                        item = {
-                            button = {
-                                size = { 50 50 }
-                                texture = "[Building.GetBuildingType.GetIcon]"
-                                tooltipwidget = { FancyTooltip_Building = {} }
-                            }
-                        }
-                    }
-                }
-                flowcontainer = {
-                    ### 도시 건물만
-                    dynamicgridbox = {
-                        datamodel = "[State.AccessUrbanBuildings]"  # ✅ 도시 건물
-                        datamodel_wrap = 2
-                        
-                        item = {
-                            button = {
-                                size = { 50 50 }
-                                texture = "[Building.GetBuildingType.GetIcon]"
-                                tooltipwidget = { FancyTooltip_Building = {} }
-                            }
-                        }
-                    }
-                }
-                flowcontainer = {
-                    ### 농업 건물만
-                    dynamicgridbox = {
-                        datamodel = "[State.AccessUncappedRuralBuildings]"  # ✅ 농업
-                        datamodel_wrap = 2
-                        
-                        item = {
-                            button = {
-                                size = { 50 50 }
-                                texture = "[Building.GetBuildingType.GetIcon]"
-                                tooltipwidget = { FancyTooltip_Building = {} }
-                            }
-                        }
-                    }
-                }
-                flowcontainer = {
-                    ### 자원 건물만
-                    dynamicgridbox = {
-                        datamodel = "[State.AccessCappedRuralBuildings]"  # ✅ 자원
-                        datamodel_wrap = 2
-                        
-                        item = {
-                            button = {
-                                size = { 50 50 }
-                                texture = "[Building.GetBuildingType.GetIcon]"
-                                tooltipwidget = { FancyTooltip_Building = {} }
-                            }
-                        }
-                    }
-                }
-                flowcontainer = {
-                    ### 인프라 건물만
-                    dynamicgridbox = {
-                        datamodel = "[State.AccessDevelopmentBuildings]"  # ✅ 인프라
-                        datamodel_wrap = 2
-                        
-                        item = {
-                            button = {
-                                size = { 50 50 }
-                                texture = "[Building.GetBuildingType.GetIcon]"
-                                tooltipwidget = { FancyTooltip_Building = {} }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        divider_clean = {}
 
         ### ========== STEP 1A ========== ###
-        flowcontainer = {
-            direction = vertical
-            spacing = 5
+        uboy_test_flowcontainer = {
 
             textbox = {
                 raw_text = "========== STEP 1A: Variable Test =========="
@@ -263,13 +22,13 @@
             }
             
             textbox = {
-                visible = "[GetPlayer.MakeScope.Var('com_test_var').IsSet]"
-                raw_text = "Variable SET: [GetPlayer.MakeScope.Var('com_test_var').GetValue]"
+                visible = "[GetPlayer.MakeScope.Var('uboy_test_var').IsSet]"
+                raw_text = "Variable SET: [GetPlayer.MakeScope.Var('uboy_test_var').GetValue]"
                 autoresize = yes
             }
             
             textbox = {
-                visible = "[Not(GetPlayer.MakeScope.Var('com_test_var').IsSet)]"
+                visible = "[Not(GetPlayer.MakeScope.Var('uboy_test_var').IsSet)]"
                 raw_text = "Variable NOT SET"
                 autoresize = yes
             }
@@ -278,7 +37,7 @@
                 size = { 180 35 }
                 using = default_button
                 onclick = "[GetScriptedGui('com_test_set_variable').Execute(GuiScope.SetRoot(GetPlayer.MakeScope).End)]"
-                
+
                 textbox = {
                     parentanchor = center
                     raw_text = "Set Variable"
@@ -287,7 +46,7 @@
             }
             
             button = {
-                visible = "[GetPlayer.MakeScope.Var('com_test_var').IsSet]"
+                visible = "[GetPlayer.MakeScope.Var('uboy_test_var').IsSet]"
                 size = { 180 35 }
                 using = default_button
                 onclick = "[GetScriptedGui('com_test_clear_variable').Execute(GuiScope.SetRoot(GetPlayer.MakeScope).End)]"
@@ -303,7 +62,7 @@
         divider_clean = {}
         
         ### ========== STEP 2E ========== ###
-        flowcontainer = {
+        uboy_test_flowcontainer = {
             direction = vertical
             spacing = 10
             
@@ -399,7 +158,7 @@
         divider_clean = {}
         
         ### ========== STEP 3A ========== ###
-        flowcontainer = {
+        uboy_test_flowcontainer = {
             direction = vertical
             spacing = 10
             
@@ -488,8 +247,7 @@
         divider_clean = {}
         
         ### ========== STEP 3B ========== ###
-        flowcontainer = {
-            visible = "[GetPlayer.MakeScope.Var('com_saved_building').IsSet]"
+        uboy_test_flowcontainer = {
             direction = vertical
             spacing = 10
             
@@ -501,6 +259,7 @@
             }
             
             textbox = {
+                visible = "[GetPlayer.MakeScope.Var('com_saved_building').IsSet]"
                 raw_text = "Filter: [GetPlayer.MakeScope.Var('com_saved_building').GetBuildingType.GetName]"
                 autoresize = yes
                 align = hcenter|nobaseline
@@ -509,6 +268,7 @@
             
             # 필터링된 회사 카드 (이전 버전 로직 유지)
             flowcontainer = {
+                visible = "[GetPlayer.MakeScope.Var('com_saved_building').IsSet]"
                 direction = vertical
                 datamodel = "[AccessPlayer.GetAttainableCompanies]"
                 spacing = 0
@@ -574,6 +334,7 @@
                                     
                                     dynamicgridbox = {
                                         datamodel = "[CompanyType.AccessBuildingTypes(GetPlayer.Self)]"
+                                        ignoreinvisible = yes
                                         datamodel_wrap = 8
                                         
                                         item = {
@@ -603,7 +364,7 @@
         divider_clean = {}
         
         ### ========== STEP 4 ========== ###
-        flowcontainer = {
+        uboy_test_flowcontainer = {
             direction = vertical
             spacing = 10
             
@@ -688,6 +449,7 @@
                                     margin = { 5 5 }
                                     
                                     dynamicgridbox = {
+                                        flipdirection = yes
                                         datamodel = "[CompanyType.AccessBuildingTypes(GetPlayer.Self)]"
                                         datamodel_wrap = 8
                                         
@@ -726,7 +488,7 @@
         divider_clean = {}
         
         ### ========== STEP 5 ========== ###
-        flowcontainer = {
+        uboy_test_flowcontainer = {
             direction = vertical
             spacing = 10
             
@@ -757,7 +519,6 @@
             flowcontainer = {
                 direction = vertical
                 datamodel = "[AccessPlayer.GetAttainableCompanies]"
-                spacing = 5
                 
                 item = {
                     container = {
@@ -767,7 +528,6 @@
                             flowcontainer = {
                                 visible = "[ObjectsEqual(BuildingType.Self, GetBuildingType('building_logging_camp').Self)]"
                                 direction = vertical
-                                spacing = 5
                                 minimumsize = { 500 -1 }
                                 margin = { 10 5 }
                                 
@@ -816,11 +576,12 @@
                                 
                                 flowcontainer = {
                                     direction = vertical
-                                    margin = { 5 5 }
+                                    spacing = 0
                                     
                                     dynamicgridbox = {
                                         datamodel = "[CompanyType.AccessBuildingTypes(GetPlayer.Self)]"
-                                        datamodel_wrap = 8
+                                        flipdirection = yes
+                                        ignoreinvisible = yes
                                         
                                         item = {
                                             button = {
@@ -857,7 +618,7 @@
         divider_clean = {}
 
         ### ========== STEP 6 ========== ###
-        flowcontainer = {
+        uboy_test_flowcontainer = {
             direction = vertical
             spacing = 10
             
@@ -1036,7 +797,7 @@
         divider_clean = {}
         
         ### ========== STEP 7 ========== ###
-        flowcontainer = {
+        uboy_test_flowcontainer = {
             direction = vertical
             spacing = 10
             
@@ -1187,7 +948,7 @@
         divider_clean = {}
         
         ### ========== STEP 8 ========== ###
-        flowcontainer = {
+        uboy_test_flowcontainer = {
             direction = vertical
             spacing = 10
             
@@ -1346,5 +1107,412 @@
         }
         
         divider_clean = {}
-    }
+
+
+         ### ========== STEP 9A ========== ###
+        flowcontainer = {
+            direction = vertical
+            spacing = 10
+            margin_bottom = 10
+
+            section_header_button = {
+                blockoverride "arrow_position" {
+                    position = { 10 0 }
+                    parentanchor = left|vcenter
+                }
+
+                blockoverride "left_text" {
+                    raw_text = "========== STEP 9: State Building Types Test =========="
+                }
+    
+                blockoverride "onclick" {
+                    onclick = "[GetVariableSystem.Toggle('uboy_step9_open')]"
+                }
+
+                blockoverride "onclick_showmore" {
+                    visible = "[Not(GetVariableSystem.Exists('uboy_step9_open'))]"
+                }
+
+                blockoverride "onclick_showless" {
+                    visible = "[GetVariableSystem.Exists('uboy_step9_open')]"
+                }
+            }
+            flowcontainer = {
+                direction = vertical
+                spacing = 5
+                visible = "[GetVariableSystem.Exists('uboy_step9_open')]"
+                # State 컨텍스트 필요 - StatesPanel이나 Country.AccessStates를 통해
+                datacontext = "[AccessPlayer]"  # 수도 State
+                datacontext = "[Country.AccessCapital]"
+
+
+                ### 모든 건물
+                flowcontainer = {
+                    direction = vertical
+                    spacing = 10
+
+                    textbox = {
+                        raw_text = "All Buildings in Capital State"
+                        margin_top = 10
+                        margin_bottom = 10
+                    }
+                    
+                    dynamicgridbox = {
+                        datamodel = "[State.AccessBuildings]"  # ✅ 모든 건물
+                        datamodel_wrap = 2
+                        
+                        item = {
+                            button = {
+                                size = { 50 50 }
+                                texture = "[Building.GetBuildingType.GetIcon]"
+                                tooltipwidget = { FancyTooltip_Building = {} }
+                            }
+                        }
+                    }
+                }
+                flowcontainer = {
+                    ### 도시 건물만
+                    dynamicgridbox = {
+                        datamodel = "[State.AccessUrbanBuildings]"  # ✅ 도시 건물
+                        datamodel_wrap = 2
+                        
+                        item = {
+                            button = {
+                                size = { 50 50 }
+                                texture = "[Building.GetBuildingType.GetIcon]"
+                                tooltipwidget = { FancyTooltip_Building = {} }
+                            }
+                        }
+                    }
+                }
+                flowcontainer = {
+                    ### 농업 건물만
+                    dynamicgridbox = {
+                        datamodel = "[State.AccessUncappedRuralBuildings]"  # ✅ 농업
+                        datamodel_wrap = 2
+                        
+                        item = {
+                            button = {
+                                size = { 50 50 }
+                                texture = "[Building.GetBuildingType.GetIcon]"
+                                tooltipwidget = { FancyTooltip_Building = {} }
+                            }
+                        }
+                    }
+                }
+                flowcontainer = {
+                    ### 자원 건물만
+                    dynamicgridbox = {
+                        datamodel = "[State.AccessCappedRuralBuildings]"  # ✅ 자원
+                        datamodel_wrap = 2
+                        
+                        item = {
+                            button = {
+                                size = { 50 50 }
+                                texture = "[Building.GetBuildingType.GetIcon]"
+                                tooltipwidget = { FancyTooltip_Building = {} }
+                            }
+                        }
+                    }
+                }
+                flowcontainer = {
+                    ### 인프라 건물만
+                    dynamicgridbox = {
+                        datamodel = "[State.AccessDevelopmentBuildings]"  # ✅ 인프라
+                        datamodel_wrap = 2
+                        
+                        item = {
+                            button = {
+                                size = { 50 50 }
+                                texture = "[Building.GetBuildingType.GetIcon]"
+                                tooltipwidget = { FancyTooltip_Building = {} }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        divider_clean = {}
+
+
+
+
+
+         ### ========== STEP 9B ========== ###
+        flowcontainer = {
+            direction = vertical
+            spacing = 10
+            margin = { 10 10 }
+            background = { using = dark_area }
+            
+            section_header_button = {
+                blockoverride "arrow_position" {
+                    position = { 10 0 }
+                    parentanchor = left|vcenter
+                }
+
+                blockoverride "left_text" {
+                    raw_text = "========== STEP 9B: Toggle_button_sgui =========="
+                }
+    
+                blockoverride "onclick" {
+                    onclick = "[GetScriptedGui('uboy_toggle_section_buildings').Execute(GuiScope.SetRoot(GetPlayer.MakeScope).End)]"
+                }
+
+                blockoverride "onclick_showmore" {
+                    visible = "[Not(GetPlayer.MakeScope.Var('uboy_section_buildings_expanded').IsSet)]"
+                }
+
+                blockoverride "onclick_showless" {
+                    visible = "[GetPlayer.MakeScope.Var('uboy_section_buildings_expanded').IsSet]"
+                }
+            }
+            
+            flowcontainer={
+                visible = "[GetPlayer.MakeScope.Var('uboy_section_buildings_expanded').IsSet]"
+                ### 모든 건물
+                flowcontainer = {
+                    
+                    direction = vertical
+                    spacing = 10
+                    datacontext = "[AccessPlayer]"
+                    datacontext = "[Country.AccessCapital]"
+                    textbox = {
+                        raw_text = "All Buildings in Capital State"
+                        margin_top = 10
+                        margin_bottom = 10
+                    }
+                    
+                    dynamicgridbox = {
+                        datamodel = "[State.AccessBuildings]"  # ✅ 모든 건물
+                        datamodel_wrap = 2
+                        
+                        item = {
+                            button = {
+                                size = { 50 50 }
+                                texture = "[Building.GetBuildingType.GetIcon]"
+                                tooltipwidget = { FancyTooltip_Building = {} }
+                            }
+                        }
+                    }
+                
+                    flowcontainer = {
+                        ### 도시 건물만
+                        dynamicgridbox = {
+                            datamodel = "[State.AccessUrbanBuildings]"  # ✅ 도시 건물
+                            datamodel_wrap = 2
+                            
+                            item = {
+                                button = {
+                                    size = { 50 50 }
+                                    texture = "[Building.GetBuildingType.GetIcon]"
+                                    tooltipwidget = { FancyTooltip_Building = {} }
+                                }
+                            }
+                        }
+                    }
+                    flowcontainer = {
+                        ### 농업 건물만
+                        dynamicgridbox = {
+                            datamodel = "[State.AccessUncappedRuralBuildings]"  # ✅ 농업
+                            datamodel_wrap = 2
+                            
+                            item = {
+                                button = {
+                                    size = { 50 50 }
+                                    texture = "[Building.GetBuildingType.GetIcon]"
+                                    tooltipwidget = { FancyTooltip_Building = {} }
+                                }
+                            }
+                        }
+                    }
+                    flowcontainer = {
+                        ### 자원 건물만
+                        dynamicgridbox = {
+                            datamodel = "[State.AccessCappedRuralBuildings]"  # ✅ 자원
+                            datamodel_wrap = 2
+                            
+                            item = {
+                                button = {
+                                    size = { 50 50 }
+                                    texture = "[Building.GetBuildingType.GetIcon]"
+                                    tooltipwidget = { FancyTooltip_Building = {} }
+                                }
+                            }
+                        }
+                    }
+                    flowcontainer = {
+                        ### 인프라 건물만
+                        dynamicgridbox = {
+                            datamodel = "[State.AccessDevelopmentBuildings]"  # ✅ 인프라
+                            datamodel_wrap = 2
+                            
+                            item = {
+                                button = {
+                                    size = { 50 50 }
+                                    texture = "[Building.GetBuildingType.GetIcon]"
+                                    tooltipwidget = { FancyTooltip_Building = {} }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        divider_clean = {}
+
+         ### ========== STEP 10 ========== ###
+        flowcontainer = {
+            direction = vertical
+            spacing = 10
+            margin = { 10 10 }
+            background = { using = dark_area }
+            
+            section_header_button = {
+                blockoverride "arrow_position" {
+                    position = { 10 0 }
+                    parentanchor = left|vcenter
+                }
+
+                blockoverride "left_text" {
+                    raw_text = "========== STEP 10: Goods Types Test =========="
+                }
+
+                blockoverride "onclick" {
+                    onclick = "[GetScriptedGui('uboy_toggle_section_goods').Execute(GuiScope.SetRoot(GetPlayer.MakeScope).End)]"
+                }
+
+                blockoverride "onclick_showmore" {
+                    visible = "[Not(GetPlayer.MakeScope.Var('uboy_section_goods_expanded').IsSet)]"
+                }
+
+                blockoverride "onclick_showless" {
+                    visible = "[GetPlayer.MakeScope.Var('uboy_section_goods_expanded').IsSet]"
+                }
+            }
+            
+            # 변수가 존재할 때만 내용 표시
+            dynamicgridbox = {
+                visible = "[GetPlayer.MakeScope.Var('uboy_section_goods_expanded').IsSet]"
+                datacontext = "[AccessPlayer.AccessCapital.AccessMarket]"
+                datamodel = "[Market.GetGoodsSortedByBalance]"
+                datamodel_wrap = 30
+                
+                item = {
+                    flowcontainer = {
+                        direction = horizontal
+                        spacing = 5
+                        margin_left = 5
+                        
+                        flowcontainer = {
+                            direction = horizontal
+                            icon = {
+                                size = { 25 25 }
+                                texture = "[Goods.GetTexture]"
+                            }
+                            tooltipwidget = {
+                                FancyTooltip_Goods = {}
+                            }
+                        }
+                        
+                        flowcontainer = {
+                            textbox = {
+                                raw_text = "[Goods.GetName] ([Goods.GetCategoryName]) <[Goods.GetBasePrice]£>"
+                                autoresize = yes
+                                align = left
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        divider_clean = {}
+
+
+        ### ========== STEP 11 ========== ###
+        flowcontainer = {
+            direction = vertical
+            spacing = 10
+            margin_bottom = 10
+            margin_left = 10
+            flowcontainer = {
+                direction = vertical
+                spacing = 10
+                textbox = {
+                    raw_text = "========== STEP 11: goods producing building test =========="
+                    autoresize = yes
+                    default_format = "#bold"
+                    align = hcenter|nobaseline
+                }
+                dynamicgridbox = {
+                    datacontext = "[AccessPlayer.AccessCapital.AccessMarket]"
+                    datamodel = "[Market.GetGoodsSortedByBalance]" 
+                    datamodel_wrap = 1
+                    flipdirection = yes
+                    
+                    item = {
+                        flowcontainer = {
+                            direction = horizontal
+                            spacing = 5
+                            margin_left = 5
+                            flowcontainer = {
+                                direction = horizontal
+                                icon={
+                                    size = { 25 25 }
+                                    texture = "[Goods.GetTexture]"
+                                }
+                                tooltipwidget = {
+                                    FancyTooltip_Goods = {}
+                                }
+                            }
+                            flowcontainer={
+                                direction = horizontal
+                                spacing = 5
+                                margin_top = 10
+                                margin_bottom = 10
+                                dynamicgridbox ={ ###dynamic grid box inside of the dynamic grid box
+                                    datamodel = "[Goods.AccessBuildingsProducingThis]"
+                                    datamodel_wrap = 3
+                                    flipdirection = yes
+                                    item={
+                                        flowcontainer={
+                                            icon = {
+                                                size = { 50 50 }
+                                                texture = "[BuildingType.GetIcon]"
+                                                tooltipwidget = {
+                                                    FancyTooltip_BuildingType = {}
+                                                }
+                                            }
+                                            textbox ={
+                                                margin = { 2 10 }
+                                                autoresize = yes
+                                                raw_text = "[BuildingType.GetName]"
+                                            }
+                                        }
+                                        #icon={
+                                        #    size = { 50, 50}
+                                        #    texture = "[Building.GetBuildingType.GetIcon]"
+                                        #}
+                                    }
+                                }
+                                
+                                #textbox = {
+                                #    raw_text = "[Goods.GetBuildingsProducingThisDesc]"
+                                #    autoresize = yes
+                                #    align = left
+                                #    max_width = 400
+                                #    elide = right
+                                #}
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        divider_clean = {}
+
+
 }
