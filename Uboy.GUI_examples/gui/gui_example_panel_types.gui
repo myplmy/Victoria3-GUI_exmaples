@@ -54,12 +54,14 @@ types gui_example_panel_types {
                     spacing = 10
                     
                     # Add Tab 1 content here
-                    test_container = {}
+                    gui_example_1_elements = {}
+                    gui_example_2_buttons = {}
+                    #test_container = {}
 
                 }
                 
                 # ========================================
-                # TAB 2 CONTENT - Second tab (empty)
+                # TAB 2 CONTENT - Second tab
                 # ========================================
                 # Visible when 'gui_tab2_open' variable exists (Tab 2 is selected)
                 flowcontainer = {

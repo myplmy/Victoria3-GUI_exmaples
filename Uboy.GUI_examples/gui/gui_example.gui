@@ -6,6 +6,289 @@
         name = "gui_test_flow_container"
     }
 
+    type gui_example_1_elements = gui_test_flow_container{
+        # foldable header
+        section_header_button = {
+            blockoverride "arrow_position" {
+                position = { 10 0 }
+                parentanchor = left|vcenter
+            }
+
+            blockoverride "left_text" {
+                raw_text = "Example (1) basic GUI elements"
+            }
+
+            blockoverride "right_text" {
+            }
+
+            blockoverride "onclick" {
+                onclick = "[GetVariableSystem.Toggle('uboy_gui_example_1_open')]"
+            }
+
+            blockoverride "onclick_showmore" {
+                visible = "[Not(GetVariableSystem.Exists('uboy_gui_example_1_open'))]"
+            }
+
+            blockoverride "onclick_showless" {
+                visible = "[GetVariableSystem.Exists('uboy_gui_example_1_open')]"
+            }
+        }
+        # header END
+
+        flowcontainer={
+            direction = vertical
+            spacing = 10
+            visible = "[GetVariableSystem.Exists('uboy_gui_example_1_open')]"
+            ### GUI EXAMPLE (1) basic GUI elements
+            # horizontal flowcontainer
+            flowcontainer = {
+                direction = horizontal
+                spacing = 10
+
+                textbox = {
+                    size = { 100 100 }
+                    align = left|top
+                    raw_text = "textbox1"
+                    background = {
+                        using = default_background
+                    }
+                }
+
+                textbox = {
+                    size = { 100 100 }
+                    align = center|vcenter
+                    raw_text = "textbox2"
+
+                    background = {
+                        using = entry_bg
+                    }
+                }
+
+                textbox = {
+                    size = { 100 100 }
+                    align = right|bottom
+                    raw_text = "textbox3"
+
+                    background = {
+                        using = highlighted_square_selection
+                    }
+                }
+
+                background = {
+                    using = defualt_bg
+                }
+            }
+
+            divider_clean = {
+                size = { 540 2 }
+			    parentanchor = hcenter
+            }
+
+            # vertical flowcontainer
+            flowcontainer = {
+                direction = vertical
+                spacing = 10
+
+                button = {
+                    size = { 100 50 }
+                    using = default_button
+                    raw_text = "button1"
+                }
+
+                icon = {
+                    size = { 50 50 }
+                    texture = "gfx/interface/icons/building_icons/rice_farm.dds"
+                }
+
+            }
+
+            divider_clean = {
+                size = { 540 2 }
+			    parentanchor = hcenter
+            }
+
+            # scrollbox with h/vbox
+            scrollbox = {
+                #layoutpolicy_horizontal = expanding
+                #layoutpolicy_vertical = expanding
+                scrollbarpolicy_horizontal = always_off
+                #scrollbarpolicy_vertical = always_off
+                scrollbar_vertical = {
+                    using = vertical_scrollbar
+                }
+                
+                size = { 540 100 }
+
+                blockoverride "scrollbox_content" {
+                    hbox = {
+                        spacing = 10
+                        vbox = {
+                            spacing = 10
+                            button = {
+                                using = default_button
+                                size = { 50 25 }
+                                raw_text = "btn1"
+                            }
+                            button = {
+                                using = default_button
+                                size = { 50 25 }
+                                raw_text = "btn2"
+                            }
+                            button = {
+                                using = default_button
+                                size = { 50 25 }
+                                raw_text = "btn3"
+                            }
+                            button = {
+                                using = default_button
+                                size = { 50 25 }
+                                raw_text = "btn4"
+                            }
+                            button = {
+                                using = default_button
+                                size = { 50 25 }
+                                raw_text = "btn5"
+                            }
+                            button = {
+                                using = default_button
+                                size = { 50 25 }
+                                raw_text = "btn6"
+                            }
+                        }
+                        vbox = {
+                            spacing = 10
+                            button = {
+                                using = default_button
+                                size = { 50 25 }
+                                raw_text = "btnA"
+                            }
+                            button = {
+                                using = default_button
+                                size = { 50 25 }
+                                raw_text = "btnB"
+                            }
+                            button = {
+                                using = default_button
+                                size = { 50 25 }
+                                raw_text = "btnC"
+                            }
+                            button = {
+                                using = default_button
+                                size = { 50 25 }
+                                raw_text = "btnD"
+                            }
+                            button = {
+                                using = default_button
+                                size = { 50 25 }
+                                raw_text = "btnE"
+                            }
+                            button = {
+                                using = default_button
+                                size = { 50 25 }
+                                raw_text = "btnF"
+                            }
+                        }
+                    }
+                }
+            }
+            # gridbox with datamodel
+            fixedgridbox = {
+                addrow = 30
+                addcolumn = 110
+                datamodel_wrap = 4
+                flipdirection = yes
+                
+                datamodel = "[AccessPlayer.AccessStates]"
+                
+                item = {
+                    textbox = {
+                        size = { 100 25 }
+                        raw_text = "[State.GetName]"
+                        elide = right
+                    }
+                }
+            }
+            ### GUI EXAMPLE (1) basic GUI elements END
+        }
+    }
+
+    type gui_example_2_buttons = gui_test_flow_container{
+        # foldable header
+        section_header_button = {
+            blockoverride "arrow_position" {
+                position = { 10 0 }
+                parentanchor = left|vcenter
+            }
+
+            blockoverride "left_text" {
+                raw_text = "Example (2) Buttons"
+            }
+
+            blockoverride "right_text" {
+            }
+
+            blockoverride "onclick" {
+                onclick = "[GetVariableSystem.Toggle('uboy_gui_example_2_open')]"
+            }
+
+            blockoverride "onclick_showmore" {
+                visible = "[Not(GetVariableSystem.Exists('uboy_gui_example_2_open'))]"
+            }
+
+            blockoverride "onclick_showless" {
+                visible = "[GetVariableSystem.Exists('uboy_gui_example_2_open')]"
+            }
+        }
+        # header END
+
+        flowcontainer={
+            visible = "[GetVariableSystem.Exists('uboy_gui_example_2_open')]"
+            spacing = 10
+            direction = vertical
+            ### GUI EXAMPLE (2) BUTTONS
+            button = {
+                size = { 200 50 }
+                using = default_button
+                raw_text = "default button"
+            }
+
+            button = {
+                size = { 200 50 }
+                using = default_button
+                raw_text = "disabled button"
+                enabled = no
+            }
+
+            button = {
+                size = { 200 50 }
+                using = default_button_primary
+                textbox = {
+                    size = { 200 50 }
+                    align = center|vcenter
+                    raw_text = "primary button"
+                }
+            }
+
+            button = {
+                size = { 300 50 }
+                using = default_button_action
+                icon = {
+                    size = { 35 35 }
+                    parentanchor = left|vcenter
+                    position = { 10 0 }
+                    texture = "gfx/interface/icons/building_icons/rice_farm.dds"
+                }
+                textbox = {
+                    size = { 85% 100% }
+                    align = right|vcenter
+                    raw_text = "action button with icon"
+                }
+            }
+            ### GUI EXAMPLE (1) BUTTONS END
+        }
+
+    }
+
     type test_container = flowcontainer {
         direction = vertical
         name = "test_container"
